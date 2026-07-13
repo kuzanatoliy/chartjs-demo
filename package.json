@@ -7,9 +7,14 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prettier:write": "prettier --write .",
+    "prettier:check": "prettier --check .",
+    "commitlint": "commitlint --edit"
   },
   "dependencies": {
+    "@kuzanatoliorg/prettier-config": "^1.16.0",
+    "prettier": "^3.9.5",
     "react": "^19.2.7",
     "react-dom": "^19.2.7"
   },

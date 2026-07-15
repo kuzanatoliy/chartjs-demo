@@ -5,6 +5,14 @@ import {
   Legend,
   CategoryScale,
   LinearScale,
+  Title,
 } from 'chart.js';
 
-ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Tooltip,
+  Legend,
+  Title
+);

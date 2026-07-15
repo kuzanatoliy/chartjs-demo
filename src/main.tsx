@@ -9,6 +9,8 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
+import './configs/chart-js.ts';
+
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />

@@ -1,18 +1,18 @@
 import {
   Chart as ChartJS,
-  BarElement,
-  Tooltip,
-  Legend,
   CategoryScale,
   LinearScale,
+  BarElement,
   Title,
+  Tooltip,
+  Legend,
 } from 'chart.js';
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
   BarElement,
+  Title,
   Tooltip,
-  Legend,
-  Title
+  Legend
 );

@@ -1,0 +1,37 @@
+.footer-root {
+  display: flex;
+  justify-content: center;
+  gap: var(--size-double);
+  font-size: var(--size-double);
+  color: var(--text-color1);
+
+  svg {
+    height: 100%;
+  }
+}
+
+.footer-link-list {
+  display: flex;
+  margin: 0;
+  list-style-type: none;
+  padding: 0;
+  gap: var(--size-single);
+}
+
+.footer-link {
+  &,
+  &:visited {
+    color: var(--second-color);
+  }
+
+  &:focus {
+    outline: 0;
+    text-decoration: underline;
+    color: var(--prime-color-main);
+  }
+
+  &:hover,
+  &:active {
+    color: var(--prime-color-dark);
+  }
+}

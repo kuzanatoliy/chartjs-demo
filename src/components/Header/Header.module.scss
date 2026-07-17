@@ -1,6 +1,9 @@
-.header-container {
+.header-root {
   background: var(--prime-color-dark);
   color: var(--text-color2);
+  position: sticky;
+  top: 0;
+  box-shadow: 0 var(--size-double) var(--size-double) var(--third-color);
 }
 
 .header-title {

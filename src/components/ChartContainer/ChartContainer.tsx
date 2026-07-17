@@ -6,5 +6,5 @@ export interface IChartContainer {
 }
 
 export const ChartContainer = (props: IChartContainer) => (
-  <div className={styles['chartcontainer-container']}>{props.children}</div>
+  <div className={styles['chartcontainer-root']}>{props.children}</div>
 );

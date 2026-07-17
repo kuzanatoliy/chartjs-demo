@@ -28,6 +28,7 @@
 
 body {
   margin: 0;
+  background: var(--third-color);
 }
 
 header,
@@ -40,4 +41,5 @@ main {
 #root {
   display: flex;
   flex-direction: column;
+  gap: var(--size-double);
 }

@@ -6,5 +6,5 @@ export interface ICard {
 }
 
 export const Card = (props: ICard) => (
-  <div className={styles['card-container']}>{props.children}</div>
+  <div className={styles['card-root']}>{props.children}</div>
 );

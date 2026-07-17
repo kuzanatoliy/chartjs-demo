@@ -1,9 +1,9 @@
 .card-root {
-  border: solid 1px var(--prime-color-main);
+  border: solid 1px var(--second-color);
   padding: var(--size-double);
-  border-radius: 6px;
+  border-radius: var(--size-single);
 
   &:focus-within {
-    outline: solid 2px var(--prime-color-dark);
+    outline: solid 2px var(--prime-color-main);
   }
 }

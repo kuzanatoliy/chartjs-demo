@@ -1,29 +1,7 @@
-import { AppBar, Container, Toolbar, Typography } from '@mui/material';
-import AdbIcon from '@mui/icons-material/Adb';
+import styles from './Header.module.scss';
 
 export const Header = () => (
-  <AppBar position='static'>
-    <Container maxWidth='xl'>
-      <Toolbar disableGutters>
-        <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-        <Typography
-          variant='h6'
-          noWrap
-          component='a'
-          href='#app-bar-with-responsive-menu'
-          sx={{
-            mr: 2,
-            display: { xs: 'none', md: 'flex' },
-            fontFamily: 'monospace',
-            fontWeight: 700,
-            letterSpacing: '.3rem',
-            color: 'inherit',
-            textDecoration: 'none',
-          }}
-        >
-          LOGO
-        </Typography>
-      </Toolbar>
-    </Container>
-  </AppBar>
+  <header className={styles['header-root']}>
+    <h1 className={styles['header-title']}>ChartJS plugins introduction </h1>
+  </header>
 );

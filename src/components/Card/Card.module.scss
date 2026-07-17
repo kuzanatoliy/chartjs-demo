@@ -1,0 +1,9 @@
+.card-root {
+  border: solid 1px var(--prime-color-main);
+  padding: var(--size-double);
+  border-radius: 6px;
+
+  &:focus-within {
+    outline: solid 2px var(--prime-color-dark);
+  }
+}

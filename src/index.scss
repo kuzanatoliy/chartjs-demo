@@ -1,0 +1,45 @@
+:root {
+  color-scheme: light dark;
+
+  --text-color1: #000;
+  --text-color2: #fff;
+
+  --prime-color-dark: #3170be;
+  --prime-color-main: #5085a5;
+  --prime-color-light: #8fc1e3;
+
+  --second-color: #687864;
+  --third-color: #f7f9fb;
+
+  --primary-color: --size-quarter: 0.125rem;
+  --size-half: 0.25rem;
+  --size-three-quarters: 0.375rem;
+  --size-single: 0.5rem;
+  --size-double: 1rem;
+  --size-triple: 1.5rem;
+  --size-quadruple: 2rem;
+
+  --breakpoint-laptop: 1024px;
+  --breakpoint-tablet: 768px;
+  --breakpoint-mobile-l: 425px;
+  --breakpoint-mobile-m: 375px;
+  --breakpoint-mobile-s: 320px;
+}
+
+body {
+  margin: 0;
+  background: var(--third-color);
+}
+
+header,
+footer,
+main {
+  padding: var(--size-double)
+    calc((100% - var(--breakpoint-laptop)) / 2 + var(--size-double));
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-double);
+}

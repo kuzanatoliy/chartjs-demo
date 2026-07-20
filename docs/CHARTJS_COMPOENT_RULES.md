@@ -49,32 +49,17 @@ The each chartjs component should be in components directory and has the followi
 ### Data example
 
     export const data = {
-      labels: [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec',
-      ],
+      labels:[...], // Labes should contain short mounth names if no different instructions
       datasets: [
         {
           label: 'Dataset 1',
-          data: [
-            933, 1562, 440, 1449, 1753, 1695, 1843, 1079, 1342, 805, 1437, 831,
-          ],
-          backgroundColor: 'rgba(255, 99, 132, 0.5)',
+          data: [...], // Data should contain 12 numbers from 0 to 2000 if no different instructions
+          backgroundColor: // Background should be rgb color with good contrast with current background specified in index.scss,
         },
-        {
-          label: 'Dataset 2',
-          data: [230, 735, 1081, 1956, 534, 1433, 1918, 301, 1195, 1989, 1697, 993],
-          backgroundColor: 'rgba(53, 162, 235, 0.5)',
-        },
-      ],
+        ...
+      ] // Dataset should contain two collections if no different instructions,
     };
+
+### Configureation
+
+The required packages should be registred in [chart-js](/src/configs/chart-js.ts) config file

@@ -4,7 +4,7 @@ import { ChartContainer } from '../ChartContainer';
 import { data } from './data';
 import { options } from './options';
 
-export const VerticalBarChart = () => (
+export const HorizontalBarChart = () => (
   <Card>
     <ChartContainer>
       <Bar options={options} data={data} tabIndex={0} />

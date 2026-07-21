@@ -5,7 +5,13 @@ import styles from './Main.module.scss';
 
 export const Main = () => (
   <main className={styles['main-root']}>
-    <VerticalBarChart />
-    <HorizontalBarChart />
+    <ul className={styles['main-list']}>
+      <li>
+        <VerticalBarChart />
+      </li>
+      <li>
+        <HorizontalBarChart />
+      </li>
+    </ul>
   </main>
 );

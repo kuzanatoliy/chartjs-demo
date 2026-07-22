@@ -9,4 +9,5 @@ export * from './GroupedBarChart';
 export * from './AreaChart';
 export * from './LineChart';
 export * from './MultiaxisLineChart';
+export * from './PieChart';
 export * from './Footer';

@@ -5,6 +5,7 @@ import { GroupedBarChart } from '../GroupedBarChart';
 import { AreaChart } from '../AreaChart';
 import { LineChart } from '../LineChart';
 import { MultiaxisLineChart } from '../MultiaxisLineChart';
+import { PieChart } from '../PieChart';
 
 import styles from './Main.module.scss';
 
@@ -31,6 +32,9 @@ export const Main = () => (
       </li>
       <li>
         <MultiaxisLineChart />
+      </li>
+      <li>
+        <PieChart />
       </li>
     </ul>
   </main>

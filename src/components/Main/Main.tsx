@@ -1,5 +1,6 @@
 import { VerticalBarChart } from '../VerticalBarChart';
 import { HorizontalBarChart } from '../HorizontalBarChart';
+import { StackedBarChart } from '../StackedBarChart';
 
 import styles from './Main.module.scss';
 
@@ -11,6 +12,9 @@ export const Main = () => (
       </li>
       <li>
         <HorizontalBarChart />
+      </li>
+      <li>
+        <StackedBarChart />
       </li>
     </ul>
   </main>

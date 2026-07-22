@@ -8,4 +8,5 @@ export * from './StackedBarChart';
 export * from './GroupedBarChart';
 export * from './AreaChart';
 export * from './LineChart';
+export * from './MultiaxisLineChart';
 export * from './Footer';

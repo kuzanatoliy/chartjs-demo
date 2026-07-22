@@ -1,5 +1,11 @@
 import { VerticalBarChart } from '../VerticalBarChart';
 import { HorizontalBarChart } from '../HorizontalBarChart';
+import { StackedBarChart } from '../StackedBarChart';
+import { GroupedBarChart } from '../GroupedBarChart';
+import { AreaChart } from '../AreaChart';
+import { LineChart } from '../LineChart';
+import { MultiaxisLineChart } from '../MultiaxisLineChart';
+import { PieChart } from '../PieChart';
 
 import styles from './Main.module.scss';
 
@@ -11,6 +17,24 @@ export const Main = () => (
       </li>
       <li>
         <HorizontalBarChart />
+      </li>
+      <li>
+        <StackedBarChart />
+      </li>
+      <li>
+        <GroupedBarChart />
+      </li>
+      <li>
+        <AreaChart />
+      </li>
+      <li>
+        <LineChart />
+      </li>
+      <li>
+        <MultiaxisLineChart />
+      </li>
+      <li>
+        <PieChart />
       </li>
     </ul>
   </main>

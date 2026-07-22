@@ -5,4 +5,5 @@ export * from './Main';
 export * from './VerticalBarChart';
 export * from './HorizontalBarChart';
 export * from './StackedBarChart';
+export * from './GroupedBarChart';
 export * from './Footer';

@@ -3,6 +3,7 @@ import { HorizontalBarChart } from '../HorizontalBarChart';
 import { StackedBarChart } from '../StackedBarChart';
 import { GroupedBarChart } from '../GroupedBarChart';
 import { AreaChart } from '../AreaChart';
+import { LineChart } from '../LineChart';
 
 import styles from './Main.module.scss';
 
@@ -23,6 +24,9 @@ export const Main = () => (
       </li>
       <li>
         <AreaChart />
+      </li>
+      <li>
+        <LineChart />
       </li>
     </ul>
   </main>

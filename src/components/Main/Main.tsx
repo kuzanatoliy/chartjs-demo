@@ -12,6 +12,8 @@ import { PolarAreaChart } from '../PolarAreaChart';
 import { RadarChart } from '../RadarChart';
 import { ScatterChart } from '../ScatterChart';
 import { BubbleChart } from '../BubbleChart';
+import { MultitypeLineBarChart } from '../MultitypeLineBarChart';
+import { MultitypeLineStackedBarChart } from '../MultitypeLineStackedBarChart';
 
 import styles from './Main.module.scss';
 
@@ -59,6 +61,12 @@ export const Main = () => (
       </li>
       <li>
         <BubbleChart />
+      </li>
+      <li>
+        <MultitypeLineBarChart />
+      </li>
+      <li>
+        <MultitypeLineStackedBarChart />
       </li>
     </ul>
   </main>

@@ -11,6 +11,8 @@ import {
   Title,
   Tooltip,
   Legend,
+  LineController,
+  BarController,
 } from 'chart.js';
 
 ChartJS.register(
@@ -24,5 +26,7 @@ ChartJS.register(
   Filler,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  LineController,
+  BarController
 );

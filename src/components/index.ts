@@ -16,4 +16,6 @@ export * from './PolarAreaChart';
 export * from './RadarChart';
 export * from './ScatterChart';
 export * from './BubbleChart';
+export * from './MultitypeLineBarChart';
+export * from './MultitypeLineStackedBarChart';
 export * from './Footer';

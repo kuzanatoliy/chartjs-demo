@@ -70,6 +70,9 @@ jobs:
         run: |
           export NODE_OPTIONS=--no-experimental-require-module
           npm run build -- --base chartjs-demo
+      - name: seo
+        run: |
+          cp googlefa9c60772e672462.html dist/googlefa9c60772e672462.html
       - name: deploy
         run: |
           echo >> dist/.nojekyll

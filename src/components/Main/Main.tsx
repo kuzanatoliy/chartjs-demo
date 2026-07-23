@@ -11,6 +11,7 @@ import { DoughnutChart } from '../DoughnutChart';
 import { PolarAreaChart } from '../PolarAreaChart';
 import { RadarChart } from '../RadarChart';
 import { ScatterChart } from '../ScatterChart';
+import { BubbleChart } from '../BubbleChart';
 
 import styles from './Main.module.scss';
 
@@ -55,6 +56,9 @@ export const Main = () => (
       </li>
       <li>
         <ScatterChart />
+      </li>
+      <li>
+        <BubbleChart />
       </li>
     </ul>
   </main>

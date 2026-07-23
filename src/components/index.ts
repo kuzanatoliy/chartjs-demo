@@ -15,4 +15,5 @@ export * from './DoughnutChart';
 export * from './PolarAreaChart';
 export * from './RadarChart';
 export * from './ScatterChart';
+export * from './BubbleChart';
 export * from './Footer';

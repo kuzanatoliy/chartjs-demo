@@ -7,6 +7,7 @@ import { MultiaxisAreaChart } from '../MultiaxisAreaChart';
 import { LineChart } from '../LineChart';
 import { MultiaxisLineChart } from '../MultiaxisLineChart';
 import { PieChart } from '../PieChart';
+import { DoughnutChart } from '../DoughnutChart';
 
 import styles from './Main.module.scss';
 
@@ -39,6 +40,9 @@ export const Main = () => (
       </li>
       <li>
         <PieChart />
+      </li>
+      <li>
+        <DoughnutChart />
       </li>
     </ul>
   </main>

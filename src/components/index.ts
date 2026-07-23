@@ -11,4 +11,5 @@ export * from './MultiaxisAreaChart';
 export * from './LineChart';
 export * from './MultiaxisLineChart';
 export * from './PieChart';
+export * from './DoughnutChart';
 export * from './Footer';

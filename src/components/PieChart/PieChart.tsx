@@ -7,7 +7,13 @@ import { options } from './options';
 export const PieChart = () => (
   <Card>
     <ChartContainer>
-      <Pie options={options} data={data} tabIndex={0} />
+      <Pie
+        options={options}
+        data={data}
+        tabIndex={0}
+        role='img'
+        aria-label={options.plugins?.title?.text}
+      />
     </ChartContainer>
   </Card>
 );

@@ -7,7 +7,13 @@ import { options } from './options';
 export const DoughnutChart = () => (
   <Card>
     <ChartContainer>
-      <Doughnut options={options} data={data} tabIndex={0} />
+      <Doughnut
+        options={options}
+        data={data}
+        tabIndex={0}
+        role='img'
+        aria-label={options.plugins?.title?.text}
+      />
     </ChartContainer>
   </Card>
 );

@@ -7,7 +7,13 @@ import { options } from './options';
 export const VerticalBarChart = () => (
   <Card>
     <ChartContainer>
-      <Bar options={options} data={data} tabIndex={0} />
+      <Bar
+        options={options}
+        data={data}
+        tabIndex={0}
+        role='img'
+        aria-label={options.plugins?.title?.text}
+      />
     </ChartContainer>
   </Card>
 );

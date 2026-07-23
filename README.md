@@ -1,75 +1,59 @@
-# React + TypeScript + Vite
+# Chartjs Demo
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The project demonstrates accessibility plugins to the chart.js library, rendering various chart types using `react-chartjs-2` and `chart.js` with accessibility properties applied natively.
 
-Currently, two official plugins are available:
+[Demo](https://kuzanatoliy.github.io/chartjs-demo/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Installation
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+$ npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Available Scripts
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+In the project directory, you can run:
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### `npm run dev`
 
-```
+Runs the app in the development mode.<br> Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
+
+### `npm run build`
+
+Builds the app for production to the `dist` folder.<br> It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.<br> Your app is ready to be deployed!
+
+### `npm run preview`
+
+Boots up a local web server that serves the production build from the `dist` folder for previewing.
+
+### `npm run lint`
+
+Runs ESLint to check for stylistic and code-quality issues across the `src` directory.
+
+### `npm run test`
+
+Runs Vitest in coverage mode to execute all component unit tests and verify rendering accessibility properties.
+
+### `npm run prettier:write`
+
+Automatically formats all project files using Prettier according to the established configuration.
+
+### `npm run prettier:check`
+
+Checks all files to ensure they conform to Prettier formatting rules without making any modifications.
+
+### `npm run commitlint`
+
+Runs Commitlint to verify your commit messages against conventional commit standards.
+
+## Commits naming
+
+Each commit should support the following format:
+
+`<type>: <issue number> <description>`
+
+## Development Guides
+
+- [Chartjs component development rules](./docs/CHARTJS_COMPOENT_RULES.md)

@@ -14,8 +14,8 @@ describe('Footer', () => {
 
   it('Should render component', () => {
     renderComponent();
-    expect(screen.getByText('© Kuzanatoliorg'));
-    expect(screen.getByRole('link', { name: 'Go to github' }));
-    expect(screen.getByRole('link', { name: 'Go to linkedin' }));
+    expect(screen.getByText('© Kuzanatoliorg')).toBeDefined();
+    expect(screen.getByRole('link', { name: 'Go to github' })).toBeDefined();
+    expect(screen.getByRole('link', { name: 'Go to linkedin' })).toBeDefined();
   });
 });

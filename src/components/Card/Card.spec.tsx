@@ -14,6 +14,6 @@ describe('Card', () => {
 
   it('Should render component', () => {
     renderComponent({ text: 'content' });
-    expect(screen.getByText('content'));
+    expect(screen.getByText('content')).toBeDefined();
   });
 });

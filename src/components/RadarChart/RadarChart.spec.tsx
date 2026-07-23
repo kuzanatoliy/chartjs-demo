@@ -1,11 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vitest } from 'vitest';
 
-import { Header } from './Header';
+import { RadarChart } from './RadarChart';
+import { options } from './options';
 
-describe('Header', () => {
+describe('RadarChart', () => {
   const renderComponent = () => {
-    return render(<Header />);
+    return render(<RadarChart />);
   };
 
   beforeEach(() => {
@@ -14,6 +15,6 @@ describe('Header', () => {
 
   it('Should render component', () => {
     renderComponent();
-    expect(screen.getByText('ChartJS plugins introduction')).toBeDefined();
+    expect(screen.getByLabelText(options.plugins.title.text)).toBeDefined();
   });
 });

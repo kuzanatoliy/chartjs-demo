@@ -7,6 +7,7 @@ export * from './HorizontalBarChart';
 export * from './StackedBarChart';
 export * from './GroupedBarChart';
 export * from './AreaChart';
+export * from './MultiaxisAreaChart';
 export * from './LineChart';
 export * from './MultiaxisLineChart';
 export * from './PieChart';

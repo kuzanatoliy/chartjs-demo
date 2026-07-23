@@ -3,6 +3,7 @@ import { HorizontalBarChart } from '../HorizontalBarChart';
 import { StackedBarChart } from '../StackedBarChart';
 import { GroupedBarChart } from '../GroupedBarChart';
 import { AreaChart } from '../AreaChart';
+import { MultiaxisAreaChart } from '../MultiaxisAreaChart';
 import { LineChart } from '../LineChart';
 import { MultiaxisLineChart } from '../MultiaxisLineChart';
 import { PieChart } from '../PieChart';
@@ -26,6 +27,9 @@ export const Main = () => (
       </li>
       <li>
         <AreaChart />
+      </li>
+      <li>
+        <MultiaxisAreaChart />
       </li>
       <li>
         <LineChart />

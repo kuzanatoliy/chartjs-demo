@@ -9,6 +9,7 @@ import { MultiaxisLineChart } from '../MultiaxisLineChart';
 import { PieChart } from '../PieChart';
 import { DoughnutChart } from '../DoughnutChart';
 import { PolarAreaChart } from '../PolarAreaChart';
+import { RadarChart } from '../RadarChart';
 
 import styles from './Main.module.scss';
 
@@ -47,6 +48,9 @@ export const Main = () => (
       </li>
       <li>
         <PolarAreaChart />
+      </li>
+      <li>
+        <RadarChart />
       </li>
     </ul>
   </main>

@@ -8,6 +8,7 @@ import { LineChart } from '../LineChart';
 import { MultiaxisLineChart } from '../MultiaxisLineChart';
 import { PieChart } from '../PieChart';
 import { DoughnutChart } from '../DoughnutChart';
+import { PolarAreaChart } from '../PolarAreaChart';
 
 import styles from './Main.module.scss';
 
@@ -43,6 +44,9 @@ export const Main = () => (
       </li>
       <li>
         <DoughnutChart />
+      </li>
+      <li>
+        <PolarAreaChart />
       </li>
     </ul>
   </main>

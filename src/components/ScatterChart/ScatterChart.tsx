@@ -7,7 +7,13 @@ import { options } from './options';
 export const ScatterChart = () => (
   <Card>
     <ChartContainer>
-      <Scatter options={options} data={data} tabIndex={0} />
+      <Scatter
+        options={options}
+        data={data}
+        tabIndex={0}
+        role='img'
+        aria-label={options.plugins?.title?.text}
+      />
     </ChartContainer>
   </Card>
 );

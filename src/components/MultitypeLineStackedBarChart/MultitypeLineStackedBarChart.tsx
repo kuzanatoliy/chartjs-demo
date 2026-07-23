@@ -7,7 +7,14 @@ import { options } from './options';
 export const MultitypeLineStackedBarChart = () => (
   <Card>
     <ChartContainer>
-      <Chart type='bar' options={options} data={data} tabIndex={0} />
+      <Chart
+        type='bar'
+        options={options}
+        data={data}
+        tabIndex={0}
+        role='img'
+        aria-label={options.plugins?.title?.text}
+      />
     </ChartContainer>
   </Card>
 );

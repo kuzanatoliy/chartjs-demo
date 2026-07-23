@@ -7,7 +7,13 @@ import { options } from './options';
 export const RadarChart = () => (
   <Card>
     <ChartContainer>
-      <Radar options={options} data={data} tabIndex={0} />
+      <Radar
+        options={options}
+        data={data}
+        tabIndex={0}
+        role='img'
+        aria-label={options.plugins?.title?.text}
+      />
     </ChartContainer>
   </Card>
 );

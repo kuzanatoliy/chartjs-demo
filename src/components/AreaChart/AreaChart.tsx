@@ -7,7 +7,13 @@ import { options } from './options';
 export const AreaChart = () => (
   <Card>
     <ChartContainer>
-      <Line options={options} data={data} tabIndex={0} />
+      <Line
+        options={options}
+        data={data}
+        tabIndex={0}
+        role='img'
+        aria-label={options.plugins?.title?.text}
+      />
     </ChartContainer>
   </Card>
 );

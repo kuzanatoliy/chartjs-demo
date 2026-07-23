@@ -10,6 +10,7 @@ import { PieChart } from '../PieChart';
 import { DoughnutChart } from '../DoughnutChart';
 import { PolarAreaChart } from '../PolarAreaChart';
 import { RadarChart } from '../RadarChart';
+import { ScatterChart } from '../ScatterChart';
 
 import styles from './Main.module.scss';
 
@@ -51,6 +52,9 @@ export const Main = () => (
       </li>
       <li>
         <RadarChart />
+      </li>
+      <li>
+        <ScatterChart />
       </li>
     </ul>
   </main>

@@ -26,6 +26,20 @@
   --breakpoint-mobile-s: 320px;
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color1: #fff;
+    --text-color2: #66fcf1;
+
+    --prime-color-dark: #0b0c10;
+    --prime-color-main: #45a29e;
+    --prime-color-light: #66fcf1;
+
+    --second-color: #c5c6c7;
+    --third-color: #1f2833;
+  }
+}
+
 body {
   margin: 0;
   background: var(--third-color);
@@ -38,6 +52,14 @@ main {
     calc((100% - var(--breakpoint-laptop)) / 2 + var(--size-double));
 }
 
+@media (width < 1072px) {
+  header,
+  footer,
+  main {
+    padding: var(--size-double);
+  }
+}
+
 main {
   flex: 1;
 }
@@ -46,5 +68,5 @@ main {
   display: flex;
   flex-direction: column;
   gap: var(--size-double);
-  height: 100dvh;
+  min-height: 100dvh;
 }

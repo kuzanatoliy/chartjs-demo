@@ -1,6 +1,18 @@
 .chartcontainer-root {
-  width: var(--breakpoint-mobile-l);
+  width: calc(var(--breakpoint-mobile-l) - 2 * var(--size-double));
   canvas:focus {
     outline: 0;
+  }
+}
+
+@media (width < 433px) {
+  .chartcontainer-root {
+    width: 311px;
+  }
+}
+
+@media (width < 368px) {
+  .chartcontainer-root {
+    width: 256px;
   }
 }

@@ -10,6 +10,9 @@ const setChartActiveElements = (
   chart.tooltip?.setActiveElements(activeElements, { x: 0, y: 0 });
 };
 
+const isOnesetChart = (type: string) =>
+  type === 'doughnut' || type === 'pie' || type === 'polarArea';
+
 type TNavigationStrategy = {
   refreshMeta: (chart: Chart) => void;
   goEnd: (chart: Chart) => void;
@@ -20,7 +23,7 @@ type TNavigationStrategy = {
 class DataFirstNavigationStrategy {
   private datasetIds: number[] = [];
   private activeDatasetId: number = 0;
-  private dataLengths: number[] = [];
+  private dataIds: number[][] = [];
   private activeDataId: number = 0;
 
   constructor(chart: Chart) {
@@ -30,7 +33,7 @@ class DataFirstNavigationStrategy {
   private setChartActiveElements = (chart: Chart) => {
     setChartActiveElements(chart, [
       {
-        index: this.activeDataId,
+        index: this.dataIds[this.activeDatasetId][this.activeDataId],
         datasetIndex: this.datasetIds[this.activeDatasetId],
       },
     ]);
@@ -40,19 +43,26 @@ class DataFirstNavigationStrategy {
     const meta = chart.getSortedVisibleDatasetMetas();
     this.datasetIds = meta.map((item) => item.index);
     this.activeDatasetId = 0;
-    this.dataLengths = meta.map((item) => item.data.length);
     this.activeDataId = 0;
+    this.dataIds =
+      meta[0] && isOnesetChart(meta[0].type)
+        ? meta.map((item) =>
+            item.data
+              .map((_, ind) => ind)
+              .filter((ind) => chart.getDataVisibility(ind))
+          )
+        : meta.map((item) => item.data.map((_, ind) => ind));
   };
 
   public goEnd = (chart: Chart) => {
     this.activeDatasetId = this.datasetIds.length - 1;
-    this.activeDataId = this.dataLengths[this.dataLengths.length - 1] - 1;
+    this.activeDataId = this.dataIds[this.dataIds.length - 1].length - 1;
     this.setChartActiveElements(chart);
   };
 
   public goNext = (chart: Chart) => {
     this.activeDataId++;
-    if (this.dataLengths[this.activeDatasetId] === this.activeDataId) {
+    if (this.dataIds[this.activeDatasetId].length === this.activeDataId) {
       this.activeDataId = 0;
       this.activeDatasetId++;
       if (this.activeDatasetId === this.datasetIds.length) {
@@ -69,7 +79,7 @@ class DataFirstNavigationStrategy {
       if (this.activeDatasetId < 0) {
         this.activeDatasetId = this.datasetIds.length - 1;
       }
-      this.activeDataId = this.dataLengths[this.activeDatasetId] - 1;
+      this.activeDataId = this.dataIds[this.activeDatasetId].length - 1;
     }
     this.setChartActiveElements(chart);
   };
@@ -149,7 +159,12 @@ class ChartjsKeyboardPluginEngine {
     });
   }
 
-  destroy() {
+  public refresh() {
+    this.strategy.refreshMeta(this.chart);
+    this.strategy.goHome(this.chart);
+  }
+
+  public destroy() {
     this.abortController.abort();
   }
 }
@@ -159,6 +174,16 @@ export const chartjsKeyboardPlugin: Plugin = {
   afterInit: (chart: Chart) => {
     store.set(chart, new ChartjsKeyboardPluginEngine(chart));
   },
+
+  afterEvent: (chart: Chart, args) => {
+    if (chart.canvas !== document.activeElement) {
+      return;
+    }
+    if (args.event.type === 'click') {
+      store.get(chart)?.refresh();
+    }
+  },
+
   afterDestroy: (chart: Chart) => {
     store.get(chart)?.destroy();
     store.delete(chart);

@@ -10,7 +10,7 @@ export const VerticalBarChart = () => (
       <Bar
         options={options}
         data={data}
-        //tabIndex={0}
+        tabIndex={0}
         role='img'
         aria-label={options.plugins?.title?.text}
       />

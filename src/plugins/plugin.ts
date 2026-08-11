@@ -17,7 +17,9 @@ type TNavigationStrategy = {
   refreshMeta: () => void;
   goEnd: () => void;
   goNext: () => void;
+  goNextDataSet: () => void;
   goPrevious: () => void;
+  goPreviousDataSet: () => void;
   goHome: () => void;
   hide: () => void;
   display: () => void;
@@ -79,24 +81,6 @@ abstract class NavigationStrategy {
     }
   };
 
-  protected setChartActiveElements: () => void = () => {
-    throw new Error('The setChartActiveElements function is not Implemented');
-  };
-
-  abstract goEnd(): void;
-  abstract goNext(): void;
-  abstract goPrevious(): void;
-  abstract goHome(): void;
-
-  public hide = () => {
-    setChartActiveElements(this.chart, []);
-  };
-
-  public display = () => {
-    this.setChartActiveElements();
-  };
-}
-class DataFirstNavigationStrategy extends NavigationStrategy {
   protected setChartActiveElements = () => {
     if (this.activeDataId !== -1 && this.activeDatasetId !== -1) {
       setChartActiveElements(this.chart, [
@@ -110,6 +94,23 @@ class DataFirstNavigationStrategy extends NavigationStrategy {
     }
   };
 
+  abstract goEnd(): void;
+  abstract goNext(): void;
+  abstract goNextDataSet(): void;
+  abstract goPrevious(): void;
+  abstract goPreviousDataSet(): void;
+  abstract goHome(): void;
+
+  public hide = () => {
+    setChartActiveElements(this.chart, []);
+  };
+
+  public display = () => {
+    this.setChartActiveElements();
+  };
+}
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+class DataFirstNavigationStrategy extends NavigationStrategy {
   public goEnd = () => {
     this.activeDatasetId = this.datasetIds.length - 1;
     this.activeDataId = this.dataIds[this.dataIds.length - 1].length - 1;
@@ -128,6 +129,8 @@ class DataFirstNavigationStrategy extends NavigationStrategy {
     this.setChartActiveElements();
   };
 
+  public goNextDataSet = this.goNext;
+
   public goPrevious = () => {
     this.activeDataId--;
     if (this.activeDataId < 0) {
@@ -140,17 +143,57 @@ class DataFirstNavigationStrategy extends NavigationStrategy {
     this.setChartActiveElements();
   };
 
+  public goPreviousDataSet = this.goPrevious;
+
   public goHome = () => {
     this.activeDatasetId = 0;
     this.activeDataId = 0;
     this.setChartActiveElements();
   };
+}
 
-  public hide = () => {
-    setChartActiveElements(this.chart, []);
+class BalanceNavigationStrategy extends NavigationStrategy {
+  public goEnd = () => {
+    this.activeDatasetId = this.datasetIds.length - 1;
+    this.activeDataId = this.dataIds[this.dataIds.length - 1].length - 1;
+    this.setChartActiveElements();
   };
 
-  public display = () => {
+  public goNext = () => {
+    this.activeDataId++;
+    if (this.dataIds[this.activeDatasetId].length === this.activeDataId) {
+      this.activeDataId = 0;
+    }
+    this.setChartActiveElements();
+  };
+
+  public goNextDataSet = () => {
+    this.activeDatasetId++;
+    if (this.activeDatasetId === this.datasetIds.length) {
+      this.activeDatasetId = 0;
+    }
+    this.setChartActiveElements();
+  };
+
+  public goPrevious = () => {
+    this.activeDataId--;
+    if (this.activeDataId < 0) {
+      this.activeDataId = this.dataIds[this.activeDatasetId].length - 1;
+    }
+    this.setChartActiveElements();
+  };
+
+  public goPreviousDataSet = () => {
+    this.activeDatasetId--;
+    if (this.activeDatasetId < 0) {
+      this.activeDatasetId = this.datasetIds.length - 1;
+    }
+    this.setChartActiveElements();
+  };
+
+  public goHome = () => {
+    this.activeDatasetId = 0;
+    this.activeDataId = 0;
     this.setChartActiveElements();
   };
 }
@@ -185,12 +228,16 @@ class ChartjsKeyboardPluginEngine {
     }
     switch (event.key) {
       case NavigationKeys.ARROW_LEFT:
-      case NavigationKeys.ARROW_UP:
         this.strategy.goPrevious();
         break;
+      case NavigationKeys.ARROW_UP:
+        this.strategy.goPreviousDataSet();
+        break;
       case NavigationKeys.ARROW_RIGHT:
-      case NavigationKeys.ARROW_DOWN:
         this.strategy.goNext();
+        break;
+      case NavigationKeys.ARROW_DOWN:
+        this.strategy.goNextDataSet();
         break;
       case NavigationKeys.HOME:
         this.strategy.goHome();
@@ -209,9 +256,9 @@ class ChartjsKeyboardPluginEngine {
     this.chart.update();
   };
 
-  constructor(chart: Chart) {
+  constructor(chart: Chart, strategy: TNavigationStrategy) {
     this.chart = chart;
-    this.strategy = new DataFirstNavigationStrategy(chart);
+    this.strategy = strategy;
 
     this.initCanvas();
 
@@ -239,7 +286,14 @@ class ChartjsKeyboardPluginEngine {
 export const chartjsKeyboardPlugin: Plugin = {
   id: 'chartjsKeyboardPlugin',
   afterInit: (chart: Chart) => {
-    store.set(chart, new ChartjsKeyboardPluginEngine(chart));
+    store.set(
+      chart,
+      new ChartjsKeyboardPluginEngine(
+        chart,
+        new BalanceNavigationStrategy(chart)
+        //new DataFirstNavigationStrategy(chart)
+      )
+    );
   },
 
   afterEvent: (chart: Chart, args) => {

@@ -152,6 +152,52 @@ class DataFirstNavigationStrategy extends NavigationStrategy {
   };
 }
 
+class DataNavigationStrategy extends NavigationStrategy {
+  protected setChartActiveElements = () => {
+    if (this.activeDataId !== -1) {
+      setChartActiveElements(
+        this.chart,
+        this.datasetIds.map((datasetIndex) => ({
+          index: this.activeDataId,
+          datasetIndex,
+        }))
+      );
+    } else {
+      setChartActiveElements(this.chart, []);
+    }
+  };
+
+  public goEnd = () => {
+    this.activeDataId = this.dataIds[this.dataIds.length - 1].length - 1;
+    this.setChartActiveElements();
+  };
+
+  public goNext = () => {
+    this.activeDataId++;
+    if (this.dataIds[this.activeDatasetId].length === this.activeDataId) {
+      this.activeDataId = 0;
+    }
+    this.setChartActiveElements();
+  };
+
+  public goNextDataSet = this.goNext;
+
+  public goPrevious = () => {
+    this.activeDataId--;
+    if (this.activeDataId < 0) {
+      this.activeDataId = this.dataIds[this.activeDatasetId].length - 1;
+    }
+    this.setChartActiveElements();
+  };
+
+  public goPreviousDataSet = this.goPrevious;
+
+  public goHome = () => {
+    this.activeDataId = 0;
+    this.setChartActiveElements();
+  };
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 class DataSetFirstNavigationStrategy extends NavigationStrategy {
   public goEnd = () => {
@@ -195,6 +241,7 @@ class DataSetFirstNavigationStrategy extends NavigationStrategy {
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class DataSetNavigationStrategy extends NavigationStrategy {
   protected setChartActiveElements = () => {
     if (this.activeDatasetId !== -1) {
@@ -380,7 +427,8 @@ export const chartjsKeyboardPlugin: Plugin = {
       chart,
       new ChartjsKeyboardPluginEngine(
         chart,
-        new DataSetNavigationStrategy(chart)
+        new DataNavigationStrategy(chart)
+        //new DataSetNavigationStrategy(chart)
         //new DataSetFirstNavigationStrategy(chart)
         //new BalanceNavigationStrategy(chart)
         //new DataFirstNavigationStrategy(chart)

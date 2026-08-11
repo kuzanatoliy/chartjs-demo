@@ -152,6 +152,7 @@ class DataFirstNavigationStrategy extends NavigationStrategy {
   };
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class DataSetFirstNavigationStrategy extends NavigationStrategy {
   public goEnd = () => {
     this.activeDatasetId = this.datasetIds.length - 1;
@@ -190,6 +191,52 @@ class DataSetFirstNavigationStrategy extends NavigationStrategy {
   public goHome = () => {
     this.activeDatasetId = 0;
     this.activeDataId = 0;
+    this.setChartActiveElements();
+  };
+}
+
+class DataSetNavigationStrategy extends NavigationStrategy {
+  protected setChartActiveElements = () => {
+    if (this.activeDatasetId !== -1) {
+      setChartActiveElements(
+        this.chart,
+        this.dataIds[this.activeDatasetId].map((index) => ({
+          index,
+          datasetIndex: this.datasetIds[this.activeDatasetId],
+        }))
+      );
+    } else {
+      setChartActiveElements(this.chart, []);
+    }
+  };
+
+  public goEnd = () => {
+    this.activeDatasetId = this.datasetIds.length - 1;
+    this.setChartActiveElements();
+  };
+
+  public goNext = () => {
+    this.activeDatasetId++;
+    if (this.activeDatasetId === this.datasetIds.length) {
+      this.activeDatasetId = 0;
+    }
+    this.setChartActiveElements();
+  };
+
+  public goNextDataSet = this.goNext;
+
+  public goPrevious = () => {
+    this.activeDatasetId--;
+    if (this.activeDatasetId < 0) {
+      this.activeDatasetId = this.datasetIds.length - 1;
+    }
+    this.setChartActiveElements();
+  };
+
+  public goPreviousDataSet = this.goPrevious;
+
+  public goHome = () => {
+    this.activeDatasetId = 0;
     this.setChartActiveElements();
   };
 }
@@ -333,7 +380,8 @@ export const chartjsKeyboardPlugin: Plugin = {
       chart,
       new ChartjsKeyboardPluginEngine(
         chart,
-        new DataSetFirstNavigationStrategy(chart)
+        new DataSetNavigationStrategy(chart)
+        //new DataSetFirstNavigationStrategy(chart)
         //new BalanceNavigationStrategy(chart)
         //new DataFirstNavigationStrategy(chart)
       )

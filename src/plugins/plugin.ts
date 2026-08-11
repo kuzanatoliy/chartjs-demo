@@ -109,7 +109,7 @@ abstract class NavigationStrategy {
     this.setChartActiveElements();
   };
 }
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+
 class DataFirstNavigationStrategy extends NavigationStrategy {
   public goEnd = () => {
     this.activeDatasetId = this.datasetIds.length - 1;
@@ -198,7 +198,6 @@ class DataNavigationStrategy extends NavigationStrategy {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class DataSetFirstNavigationStrategy extends NavigationStrategy {
   public goEnd = () => {
     this.activeDatasetId = this.datasetIds.length - 1;
@@ -241,7 +240,6 @@ class DataSetFirstNavigationStrategy extends NavigationStrategy {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class DataSetNavigationStrategy extends NavigationStrategy {
   protected setChartActiveElements = () => {
     if (this.activeDatasetId !== -1) {
@@ -288,7 +286,6 @@ class DataSetNavigationStrategy extends NavigationStrategy {
   };
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 class BalanceNavigationStrategy extends NavigationStrategy {
   public goEnd = () => {
     this.activeDatasetId = this.datasetIds.length - 1;
@@ -420,19 +417,31 @@ class ChartjsKeyboardPluginEngine {
   }
 }
 
+export type TChartjsKeyboardPluginOptions = {
+  strategy?: 'data' | 'dataset' | 'data-first' | 'dataset-first' | 'balance';
+};
+
 export const chartjsKeyboardPlugin: Plugin = {
   id: 'chartjsKeyboardPlugin',
-  afterInit: (chart: Chart) => {
+  afterInit: (chart: Chart, _, options: TChartjsKeyboardPluginOptions) => {
+    let Strategy = BalanceNavigationStrategy;
+    switch (options.strategy) {
+      case 'data-first':
+        Strategy = DataFirstNavigationStrategy;
+        break;
+      case 'dataset-first':
+        Strategy = DataSetFirstNavigationStrategy;
+        break;
+      case 'data':
+        Strategy = DataNavigationStrategy;
+        break;
+      case 'dataset':
+        Strategy = DataSetNavigationStrategy;
+        break;
+    }
     store.set(
       chart,
-      new ChartjsKeyboardPluginEngine(
-        chart,
-        new DataNavigationStrategy(chart)
-        //new DataSetNavigationStrategy(chart)
-        //new DataSetFirstNavigationStrategy(chart)
-        //new BalanceNavigationStrategy(chart)
-        //new DataFirstNavigationStrategy(chart)
-      )
+      new ChartjsKeyboardPluginEngine(chart, new Strategy(chart))
     );
   },
 

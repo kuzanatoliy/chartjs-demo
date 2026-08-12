@@ -14,7 +14,7 @@ import {
   LineController,
   BarController,
 } from 'chart.js';
-import { chartjsKeyboardPlugin } from '../plugins/plugin';
+import { chartjsKeyboardPlugin } from '../plugins/chartjs-keyboard-plugin/chartjs-keyboard-plugin';
 
 ChartJS.register(
   CategoryScale,

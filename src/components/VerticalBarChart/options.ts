@@ -1,6 +1,4 @@
-import type { ChartOptions } from 'chart.js';
-
-export const options: ChartOptions = {
+export const options = {
   responsive: true,
   plugins: {
     legend: {
@@ -11,7 +9,7 @@ export const options: ChartOptions = {
       text: 'Chart.js Vertical Bar Chart',
     },
     chartjsKeyboardPlugin: {
-      strategy: 'data',
+      strategy: 'data' as const,
     },
   },
 };

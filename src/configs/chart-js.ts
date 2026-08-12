@@ -14,6 +14,7 @@ import {
   LineController,
   BarController,
 } from 'chart.js';
+import { chartjsKeyboardPlugin } from '../plugins/chartjs-keyboard-plugin/chartjs-keyboard-plugin';
 
 ChartJS.register(
   CategoryScale,
@@ -28,5 +29,6 @@ ChartJS.register(
   Tooltip,
   Legend,
   LineController,
-  BarController
+  BarController,
+  chartjsKeyboardPlugin
 );

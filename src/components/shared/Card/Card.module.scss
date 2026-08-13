@@ -1,4 +1,7 @@
 .card-root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-double);
   border: solid 1px var(--second-color);
   padding: var(--size-double);
   border-radius: var(--size-single);

@@ -36,6 +36,7 @@ export const ChartWrapper = <
   return (
     <Chart
       {...props}
+      key={strategy}
       options={localOptions}
       role='img'
       aria-label={localOptions.plugins?.title?.text?.toString()}

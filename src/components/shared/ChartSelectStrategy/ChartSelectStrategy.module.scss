@@ -1,0 +1,12 @@
+.chartselect-selector {
+  border-radius: var(--size-half);
+  background: inherit;
+
+  &:focus {
+    outline: solid 2px var(--prime-color-main);
+  }
+}
+
+.chartselect-option {
+  background: var(--third-color);
+}

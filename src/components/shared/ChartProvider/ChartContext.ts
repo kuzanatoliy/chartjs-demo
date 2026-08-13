@@ -1,8 +1,9 @@
 import { createContext } from 'react';
+import { ENavigationStrategy } from '../../../plugins/chartjs-keyboard-plugin';
 import type { TChartContext } from './types';
 
 export const DEFAULT_CHART_CONTEXT: TChartContext = {
-  strategy: 'balance',
+  strategy: ENavigationStrategy.BALANCE,
   onChangeStrategy: () => {
     throw new Error('onChangeStratety in not available');
   },

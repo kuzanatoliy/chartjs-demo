@@ -3,6 +3,7 @@ import {
   ChartContainer,
   ChartProvider,
   ChartWrapper,
+  ChartSelect,
 } from '../../shared';
 import { data } from './data';
 import { options } from './options';
@@ -10,6 +11,7 @@ import { options } from './options';
 export const LineChart = () => (
   <ChartProvider>
     <Card>
+      <ChartSelect />
       <ChartContainer>
         <ChartWrapper type='line' options={options} data={data} />
       </ChartContainer>

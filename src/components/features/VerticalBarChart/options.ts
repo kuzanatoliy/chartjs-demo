@@ -8,8 +8,5 @@ export const options = {
       display: true,
       text: 'Chart.js Vertical Bar Chart',
     },
-    chartjsKeyboardPlugin: {
-      strategy: 'data' as const,
-    },
   },
 };

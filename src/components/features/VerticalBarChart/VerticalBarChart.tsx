@@ -1,4 +1,3 @@
-import { Bar } from 'react-chartjs-2';
 import {
   Card,
   ChartContainer,
@@ -12,7 +11,7 @@ export const VerticalBarChart = () => (
   <ChartProvider>
     <Card>
       <ChartContainer>
-        <ChartWrapper Component={Bar} options={options} data={data} />
+        <ChartWrapper type='bar' options={options} data={data} />
       </ChartContainer>
     </Card>
   </ChartProvider>

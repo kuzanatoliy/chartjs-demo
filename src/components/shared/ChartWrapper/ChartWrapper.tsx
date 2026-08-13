@@ -1,18 +1,21 @@
-import type { ChartOptions } from 'chart.js';
-import { useContext, useMemo, type ReactNode } from 'react';
+import type { ChartData, ChartOptions, ChartType } from 'chart.js';
+import { useContext, useMemo } from 'react';
 import { ChartContext } from '../ChartProvider';
+import { Chart } from 'react-chartjs-2';
 
-export type TChartWrapper<TOptions extends ChartOptions, TData> = {
-  Component: (props: {
-    options: TOptions;
-    data: TData;
-    role?: string;
-  }) => ReactNode;
+export type TChartWrapper<
+  TOptions extends ChartOptions,
+  TData extends ChartData,
+> = {
   options: TOptions;
   data: TData;
+  type: ChartType;
 };
 
-export const ChartWrapper = <TOptions extends ChartOptions, TData>(
+export const ChartWrapper = <
+  TOptions extends ChartOptions,
+  TData extends ChartData,
+>(
   props: TChartWrapper<TOptions, TData>
 ) => {
   const { strategy } = useContext(ChartContext);
@@ -31,11 +34,11 @@ export const ChartWrapper = <TOptions extends ChartOptions, TData>(
   );
 
   return (
-    <props.Component
+    <Chart
+      {...props}
       options={localOptions}
-      data={props.data}
       role='img'
-      aria-label={props.options.plugins?.title?.text}
+      aria-label={localOptions.plugins?.title?.text?.toString()}
     />
   );
 };

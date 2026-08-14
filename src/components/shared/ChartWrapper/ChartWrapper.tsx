@@ -1,6 +1,6 @@
 import type { ChartData, ChartOptions, ChartType } from 'chart.js';
-import { useContext, useMemo } from 'react';
-import { ChartContext } from '../ChartProvider';
+import { useMemo } from 'react';
+import { useChartContext } from '../ChartProvider';
 import { Chart } from 'react-chartjs-2';
 
 export type TChartWrapper<
@@ -18,7 +18,7 @@ export const ChartWrapper = <
 >(
   props: TChartWrapper<TOptions, TData>
 ) => {
-  const { strategy } = useContext(ChartContext);
+  const { strategy } = useChartContext();
 
   const localOptions = useMemo(
     () => ({

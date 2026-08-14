@@ -1,5 +1,5 @@
-import { useContext, useCallback, useId, type ChangeEvent } from 'react';
-import { ChartContext } from '../ChartProvider';
+import { useCallback, useId, type ChangeEvent } from 'react';
+import { useChartContext } from '../ChartProvider';
 import { ENavigationStrategy } from '../../../plugins/chartjs-keyboard-plugin';
 import styles from './ChartSelectStrategy.module.scss';
 
@@ -12,7 +12,7 @@ const strategies = [
 ];
 
 export const ChartSelect = () => {
-  const { strategy, onChangeStrategy } = useContext(ChartContext);
+  const { strategy, onChangeStrategy } = useChartContext();
   const selectId = useId();
 
   const changeHandler = useCallback(

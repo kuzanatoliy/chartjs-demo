@@ -1,30 +1,14 @@
-import { useCallback, useMemo, useState, type ReactNode } from 'react';
-import type { TChartContext, TChartState } from './types';
+import type { ReactNode } from 'react';
+import type { TChartContext } from './types';
 import { ChartContext } from './ChartContext';
-import { ENavigationStrategy } from '../../../plugins/chartjs-keyboard-plugin';
+import { useChartState, type TUseChartStateProps } from './hooks';
 
-export type TChartProviderProps = {
-  ['init-strategy']?: TChartState['strategy'];
+export type TChartProviderProps = TUseChartStateProps & {
   children: ReactNode;
 };
 
 export const ChartProvider = (props: TChartProviderProps) => {
-  const [strategy, setStrategy] = useState<TChartState['strategy']>(
-    props['init-strategy'] || ENavigationStrategy.BALANCE
-  );
-
-  const onChangeStrategy = useCallback(
-    (strategy: TChartContext['strategy']) => setStrategy(strategy),
-    []
-  );
-
-  const value: TChartContext = useMemo(
-    () => ({
-      strategy,
-      onChangeStrategy,
-    }),
-    [strategy, onChangeStrategy]
-  );
+  const value: TChartContext = useChartState(props);
 
   return (
     <ChartContext.Provider value={value}>

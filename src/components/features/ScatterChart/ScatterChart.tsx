@@ -1,3 +1,4 @@
+import { ENavigationStrategy } from '../../../plugins/chartjs-keyboard-plugin';
 import {
   Card,
   ChartContainer,
@@ -9,12 +10,12 @@ import { data } from './data';
 import { options } from './options';
 
 export const ScatterChart = () => (
-  <ChartProvider>
+  <ChartProvider init-strategy={ENavigationStrategy.DATASET_FIRST}>
     <Card>
-      <ChartSelect />
       <ChartContainer>
         <ChartWrapper type='scatter' options={options} data={data} />
       </ChartContainer>
+      <ChartSelect />
     </Card>
   </ChartProvider>
 );

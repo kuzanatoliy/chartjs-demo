@@ -1,3 +1,4 @@
+import { ENavigationStrategy } from '../../../plugins/chartjs-keyboard-plugin';
 import {
   Card,
   ChartContainer,
@@ -9,12 +10,12 @@ import { data } from './data';
 import { options } from './options';
 
 export const BubbleChart = () => (
-  <ChartProvider>
+  <ChartProvider init-strategy={ENavigationStrategy.DATA_FIRST}>
     <Card>
-      <ChartSelect />
       <ChartContainer>
         <ChartWrapper type='bubble' options={options} data={data} />
       </ChartContainer>
+      <ChartSelect />
     </Card>
   </ChartProvider>
 );

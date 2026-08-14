@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import { useChartContext } from '../ChartProvider';
 import { Chart } from 'react-chartjs-2';
 
-export type TChartWrapper<
+export type TChartWrapperProps<
   TOptions extends ChartOptions,
   TData extends ChartData,
 > = {
@@ -16,7 +16,7 @@ export const ChartWrapper = <
   TOptions extends ChartOptions,
   TData extends ChartData,
 >(
-  props: TChartWrapper<TOptions, TData>
+  props: TChartWrapperProps<TOptions, TData>
 ) => {
   const { strategy } = useChartContext();
 

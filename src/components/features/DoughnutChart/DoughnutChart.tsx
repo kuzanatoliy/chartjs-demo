@@ -1,19 +1,21 @@
-import { Doughnut } from 'react-chartjs-2';
-import { Card } from '../../shared/Card';
-import { ChartContainer } from '../../shared/ChartContainer';
+import { ENavigationStrategy } from '../../../plugins/chartjs-keyboard-plugin';
+import {
+  Card,
+  ChartContainer,
+  ChartProvider,
+  ChartWrapper,
+  ChartSelectStrategy,
+} from '../../shared';
 import { data } from './data';
 import { options } from './options';
 
 export const DoughnutChart = () => (
-  <Card>
-    <ChartContainer>
-      <Doughnut
-        options={options}
-        data={data}
-        tabIndex={0}
-        role='img'
-        aria-label={options.plugins?.title?.text}
-      />
-    </ChartContainer>
-  </Card>
+  <ChartProvider init-strategy={ENavigationStrategy.DATA_FIRST}>
+    <Card>
+      <ChartContainer>
+        <ChartWrapper type='doughnut' options={options} data={data} />
+      </ChartContainer>
+      <ChartSelectStrategy />
+    </Card>
+  </ChartProvider>
 );

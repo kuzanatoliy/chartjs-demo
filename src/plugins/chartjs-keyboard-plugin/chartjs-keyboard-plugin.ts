@@ -7,7 +7,10 @@ import {
   DataSetFirstNavigationStrategy,
   DataSetNavigationStrategy,
 } from './strategies';
-import type { TChartjsKeyboardPluginOptions } from './types';
+import {
+  type TChartjsKeyboardPluginOptions,
+  ENavigationStrategy,
+} from './types';
 
 const store = new Map<Chart, ChartjsKeyboardPluginEngine>();
 
@@ -16,16 +19,16 @@ export const chartjsKeyboardPlugin: Plugin = {
   afterInit: (chart: Chart, _, options: TChartjsKeyboardPluginOptions) => {
     let Strategy = BalanceNavigationStrategy;
     switch (options.strategy) {
-      case 'data-first':
+      case ENavigationStrategy.DATA_FIRST:
         Strategy = DataFirstNavigationStrategy;
         break;
-      case 'dataset-first':
+      case ENavigationStrategy.DATASET_FIRST:
         Strategy = DataSetFirstNavigationStrategy;
         break;
-      case 'data':
+      case ENavigationStrategy.DATA:
         Strategy = DataNavigationStrategy;
         break;
-      case 'dataset':
+      case ENavigationStrategy.DATASET:
         Strategy = DataSetNavigationStrategy;
         break;
     }

@@ -1,0 +1,5 @@
+import type { TChartState } from './chart-state.types';
+
+export type TChartHandlers = {
+  onChangeStrategy: (strategy: TChartState['strategy']) => void;
+};

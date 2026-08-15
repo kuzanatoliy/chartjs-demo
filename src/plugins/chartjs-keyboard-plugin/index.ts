@@ -1,2 +1,2 @@
 export * from './chartjs-keyboard-plugin';
-export type * from './types';
+export * from './types';

@@ -1,0 +1,45 @@
+import type { ChartData, ChartOptions, ChartType } from 'chart.js';
+import { useMemo } from 'react';
+import { useChartContext } from '../ChartProvider';
+import { Chart } from 'react-chartjs-2';
+
+export type TChartWrapperProps<
+  TOptions extends ChartOptions,
+  TData extends ChartData,
+> = {
+  options: TOptions;
+  data: TData;
+  type: ChartType;
+};
+
+export const ChartWrapper = <
+  TOptions extends ChartOptions,
+  TData extends ChartData,
+>(
+  props: TChartWrapperProps<TOptions, TData>
+) => {
+  const { strategy } = useChartContext();
+
+  const localOptions = useMemo(
+    () => ({
+      ...props.options,
+      plugins: {
+        ...props.options.plugins,
+        chartjsKeyboardPlugin: {
+          strategy,
+        },
+      },
+    }),
+    [props.options, strategy]
+  );
+
+  return (
+    <Chart
+      {...props}
+      key={strategy}
+      options={localOptions}
+      role='img'
+      aria-label={localOptions.plugins?.title?.text?.toString()}
+    />
+  );
+};

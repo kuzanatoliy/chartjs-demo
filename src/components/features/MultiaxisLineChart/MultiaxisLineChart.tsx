@@ -4,7 +4,7 @@ import {
   ChartContainer,
   ChartProvider,
   ChartWrapper,
-  ChartSelect,
+  ChartSelectStrategy,
 } from '../../shared';
 import { data } from './data';
 import { options } from './options';
@@ -15,7 +15,7 @@ export const MultiaxisLineChart = () => (
       <ChartContainer>
         <ChartWrapper type='line' options={options} data={data} />
       </ChartContainer>
-      <ChartSelect />
+      <ChartSelectStrategy />
     </Card>
   </ChartProvider>
 );

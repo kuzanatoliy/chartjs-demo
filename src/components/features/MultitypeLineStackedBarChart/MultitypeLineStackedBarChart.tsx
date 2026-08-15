@@ -6,7 +6,7 @@ import {
   ChartContainer,
   ChartProvider,
   ChartWrapper,
-  ChartSelect,
+  ChartSelectStrategy,
 } from '../../shared';
 
 export const MultitypeLineStackedBarChart = () => (
@@ -15,7 +15,7 @@ export const MultitypeLineStackedBarChart = () => (
       <ChartContainer>
         <ChartWrapper type='bar' options={options} data={data} />
       </ChartContainer>
-      <ChartSelect />
+      <ChartSelectStrategy />
     </Card>
   </ChartProvider>
 );

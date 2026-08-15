@@ -11,9 +11,10 @@ const strategies = [
   ENavigationStrategy.DATA_FIRST,
 ];
 
-export const ChartSelect = () => {
+export const ChartSelectStrategy = () => {
   const { strategy, onChangeStrategy } = useChartContext();
   const selectId = useId();
+  console.log(strategy);
 
   const changeHandler = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {
@@ -28,14 +29,14 @@ export const ChartSelect = () => {
       <select
         id={selectId}
         onChange={changeHandler}
-        className={styles['chartselect-selector']}
+        className={styles['chartselectstrategy-selector']}
+        value={strategy}
       >
         {strategies.map((val) => (
           <option
-            className={styles['chartselect-option']}
+            className={styles['chartselectstrategy-option']}
             key={val}
             value={val}
-            selected={strategy === val}
           >
             {val}
           </option>

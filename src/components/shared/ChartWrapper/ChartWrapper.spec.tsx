@@ -19,7 +19,7 @@ vitest.mock('react-chartjs-2', async () => {
   };
 });
 
-describe('ChartContainer', () => {
+describe('ChartWrapper', () => {
   const DEFAULT_PROPS = {
     data: {
       labels: ['Jan', 'Feb', 'Mar'],

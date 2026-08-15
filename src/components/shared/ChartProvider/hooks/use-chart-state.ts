@@ -6,9 +6,11 @@ export type TUseChartStateProps = {
   ['init-strategy']?: TChartState['strategy'];
 };
 
+export const DEFAULT_CHART_STRATEGY = ENavigationStrategy.BALANCE;
+
 export const useChartState = (props: TUseChartStateProps) => {
   const [strategy, setStrategy] = useState<TChartState['strategy']>(
-    props['init-strategy'] || ENavigationStrategy.BALANCE
+    props['init-strategy'] || DEFAULT_CHART_STRATEGY
   );
 
   const onChangeStrategy = useCallback(

@@ -1,0 +1,18 @@
+name: autotest
+on: push
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    environment: autotests
+    steps:
+      - name: Trigger Autotests
+        uses: actions/github-script@v9
+        with:
+          github-token: ${{ secrets.CHARTJS_DEMO_AUTOTEST_RUN }}
+          script: |
+            await github.rest.actions.createWorkflowDispatch({
+              owner: 'njkznu@gmail.com',
+              repo: 'chartjs-demo-integration-tests',
+              workflow_id: 'e2e',
+              ref: 'master'
+            })

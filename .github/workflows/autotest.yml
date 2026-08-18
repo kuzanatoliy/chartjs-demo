@@ -1,9 +1,15 @@
 name: autotest
-on: [page_build, workflow_dispatch]
+on:
+  workflow_run:
+    workflows: ['pages-build-deployment']
+    types:
+      - completed
+  workflow_dispatch:
 jobs:
   pipeline:
     runs-on: ubuntu-latest
     environment: autotests
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Trigger Autotests
         uses: actions/github-script@v9

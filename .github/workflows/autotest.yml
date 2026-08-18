@@ -1,5 +1,5 @@
 name: autotest
-on: page_build
+on: [page_build, workflow_dispatch]
 jobs:
   pipeline:
     runs-on: ubuntu-latest

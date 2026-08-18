@@ -1,5 +1,5 @@
 name: autotest
-on: push
+on: page_build
 jobs:
   pipeline:
     runs-on: ubuntu-latest

@@ -6,7 +6,7 @@ jobs:
     environment: autotests
     steps:
       - name: Trigger Autotests
-        uses: actions/github-script@v9
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.CHARTJS_DEMO_AUTOTEST_RUN }}
           script: |

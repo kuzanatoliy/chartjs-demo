@@ -13,6 +13,6 @@ jobs:
             await github.rest.actions.createWorkflowDispatch({
               owner: 'njkznu@gmail.com',
               repo: 'chartjs-demo-integration-tests',
-              workflow_id: 'e2e',
+              workflow_id: 'e2e.yml',
               ref: 'master'
             })

@@ -13,6 +13,12 @@ import {
   Legend,
   LineController,
   BarController,
+  PieController,
+  DoughnutController,
+  PolarAreaController,
+  RadarController,
+  ScatterController,
+  BubbleController,
 } from 'chart.js';
 import { chartjsKeyboardPlugin } from '../plugins/chartjs-keyboard-plugin/chartjs-keyboard-plugin';
 
@@ -30,5 +36,11 @@ ChartJS.register(
   Legend,
   LineController,
   BarController,
+  PieController,
+  DoughnutController,
+  PolarAreaController,
+  RadarController,
+  ScatterController,
+  BubbleController,
   chartjsKeyboardPlugin
 );

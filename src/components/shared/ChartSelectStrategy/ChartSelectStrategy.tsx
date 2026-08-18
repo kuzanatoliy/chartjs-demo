@@ -14,7 +14,6 @@ const strategies = [
 export const ChartSelectStrategy = () => {
   const { strategy, onChangeStrategy } = useChartContext();
   const selectId = useId();
-  console.log(strategy);
 
   const changeHandler = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {

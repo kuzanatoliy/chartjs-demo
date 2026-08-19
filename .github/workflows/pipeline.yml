@@ -74,6 +74,7 @@ jobs:
         run: |
           cp googlefa9c60772e672462.html dist/googlefa9c60772e672462.html
           cp sitemap.xml dist/sitemap.xml
+          cp robots.txt dist/robots.txt
       - name: deploy
         run: |
           echo >> dist/.nojekyll

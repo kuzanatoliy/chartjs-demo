@@ -73,6 +73,7 @@ jobs:
       - name: seo
         run: |
           cp googlefa9c60772e672462.html dist/googlefa9c60772e672462.html
+          cp sitemap.xml dist/sitemap.xml
       - name: deploy
         run: |
           echo >> dist/.nojekyll

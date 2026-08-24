@@ -1,7 +1,7 @@
 import type { Chart } from 'chart.js';
 import {
   ENavigationDirection,
-  type TNavigationEngineOptions,
+  type TChartjsKeyboardPluginEngineOptions,
   type TNavigationStrategy,
 } from '../types';
 
@@ -100,7 +100,7 @@ export class ChartjsKeyboardPluginEngine {
   constructor(
     chart: Chart,
     strategy: TNavigationStrategy,
-    options: TNavigationEngineOptions = DEFAULT_OPTIONS
+    options: TChartjsKeyboardPluginEngineOptions = DEFAULT_OPTIONS
   ) {
     this.chart = chart;
     this.strategy = strategy;

@@ -34,7 +34,7 @@ export const chartjsKeyboardPlugin: Plugin = {
     }
     store.set(
       chart,
-      new ChartjsKeyboardPluginEngine(chart, new Strategy(chart))
+      new ChartjsKeyboardPluginEngine(chart, new Strategy(chart), options)
     );
   },
 

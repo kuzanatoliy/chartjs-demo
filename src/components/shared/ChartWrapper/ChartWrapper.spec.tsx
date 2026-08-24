@@ -2,9 +2,13 @@ import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vitest } from 'vitest';
 import type { ChartData, ChartOptions } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
+import * as chartProvider from '../ChartProvider';
 
 import { ChartWrapper, type TChartWrapperProps } from './ChartWrapper';
-import { ENavigationStrategy } from '../../../plugins/chartjs-keyboard-plugin';
+import {
+  ENavigationDirection,
+  ENavigationStrategy,
+} from '../../../plugins/chartjs-keyboard-plugin';
 
 vitest.mock('react-chartjs-2', async () => {
   const origin =
@@ -52,7 +56,14 @@ describe('ChartWrapper', () => {
   });
 
   it('Should render component', () => {
-    renderComponent(DEFAULT_PROPS);
+    renderComponent();
+    expect(
+      screen.getByLabelText(DEFAULT_PROPS.options.plugins.title.text)
+    ).toBeDefined();
+  });
+
+  it('Should use balance strategy', () => {
+    renderComponent();
     expect(Chart).toHaveBeenCalledWith(
       expect.objectContaining({
         options: expect.objectContaining({
@@ -65,8 +76,79 @@ describe('ChartWrapper', () => {
       }),
       undefined
     );
-    expect(
-      screen.getByLabelText(DEFAULT_PROPS.options.plugins.title.text)
-    ).toBeDefined();
+  });
+
+  it('Should use ltr direction', () => {
+    renderComponent();
+    expect(Chart).toHaveBeenCalledWith(
+      expect.objectContaining({
+        options: expect.objectContaining({
+          plugins: expect.objectContaining({
+            legend: expect.objectContaining({
+              rtl: false,
+              textDirection: ENavigationDirection.LTR,
+            }),
+            tooltip: expect.objectContaining({
+              rtl: false,
+              textDirection: ENavigationDirection.LTR,
+            }),
+            title: expect.objectContaining({
+              textDirection: ENavigationDirection.LTR,
+            }),
+            chartjsKeyboardPlugin: expect.objectContaining({
+              direction: ENavigationDirection.LTR,
+            }),
+          }),
+          scales: expect.objectContaining({
+            x: expect.objectContaining({
+              reverse: false,
+            }),
+            y: expect.objectContaining({
+              position: 'left',
+            }),
+          }),
+        }),
+      }),
+      undefined
+    );
+  });
+
+  it('Should use rtl direction', () => {
+    vitest.spyOn(chartProvider, 'useChartContext').mockReturnValueOnce({
+      strategy: ENavigationStrategy.BALANCE,
+      direction: ENavigationDirection.RTL,
+    } as chartProvider.TChartContext);
+    renderComponent();
+    expect(Chart).toHaveBeenCalledWith(
+      expect.objectContaining({
+        options: expect.objectContaining({
+          plugins: expect.objectContaining({
+            legend: expect.objectContaining({
+              rtl: true,
+              textDirection: ENavigationDirection.RTL,
+            }),
+            tooltip: expect.objectContaining({
+              rtl: true,
+              textDirection: ENavigationDirection.RTL,
+            }),
+            title: expect.objectContaining({
+              textDirection: ENavigationDirection.RTL,
+            }),
+            chartjsKeyboardPlugin: expect.objectContaining({
+              direction: ENavigationDirection.RTL,
+            }),
+          }),
+          scales: expect.objectContaining({
+            x: expect.objectContaining({
+              reverse: true,
+            }),
+            y: expect.objectContaining({
+              position: 'right',
+            }),
+          }),
+        }),
+      }),
+      undefined
+    );
   });
 });

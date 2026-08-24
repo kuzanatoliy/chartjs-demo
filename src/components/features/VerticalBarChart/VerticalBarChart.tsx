@@ -4,6 +4,7 @@ import {
   ChartContainer,
   ChartProvider,
   ChartSelectStrategy,
+  ChartSelectDirection,
   ChartWrapper,
 } from '../../shared';
 import { data } from './data';
@@ -16,6 +17,7 @@ export const VerticalBarChart = () => (
         <ChartWrapper type='bar' options={options} data={data} />
       </ChartContainer>
       <ChartSelectStrategy />
+      <ChartSelectDirection />
     </Card>
   </ChartProvider>
 );

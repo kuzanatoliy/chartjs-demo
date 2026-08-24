@@ -1,5 +1,9 @@
 import type { Chart } from 'chart.js';
-import type { TNavigationStrategy } from '../types';
+import {
+  ENavigationDirection,
+  type TChartjsKeyboardPluginEngineOptions,
+  type TNavigationStrategy,
+} from '../types';
 
 const NavigationKeys = {
   ARROW_LEFT: 'ArrowLeft',
@@ -25,10 +29,13 @@ const NavigationKeysSet = new Set([
   NavigationKeys.SPACE,
 ]);
 
+const DEFAULT_OPTIONS = {};
+
 export class ChartjsKeyboardPluginEngine {
   private chart: Chart;
   private abortController = new AbortController();
   private strategy: TNavigationStrategy;
+  private direction: ENavigationDirection;
 
   private initCanvas = () => {
     if (!this.chart.canvas.hasAttribute('tabIndex')) {
@@ -43,8 +50,7 @@ export class ChartjsKeyboardPluginEngine {
   };
 
   private blurHandler = () => {
-    this.chart.setActiveElements([]);
-    this.chart.tooltip?.setActiveElements([], { x: 0, y: 0 });
+    this.strategy.hide();
     this.chart.update();
   };
 
@@ -55,13 +61,21 @@ export class ChartjsKeyboardPluginEngine {
     }
     switch (event.key) {
       case NavigationKeys.ARROW_LEFT:
-        this.strategy.goPrevious();
+        if (this.direction === ENavigationDirection.LTR) {
+          this.strategy.goPrevious();
+        } else {
+          this.strategy.goNext();
+        }
         break;
       case NavigationKeys.ARROW_UP:
         this.strategy.goPreviousDataSet();
         break;
       case NavigationKeys.ARROW_RIGHT:
-        this.strategy.goNext();
+        if (this.direction === ENavigationDirection.LTR) {
+          this.strategy.goNext();
+        } else {
+          this.strategy.goPrevious();
+        }
         break;
       case NavigationKeys.ARROW_DOWN:
         this.strategy.goNextDataSet();
@@ -83,9 +97,14 @@ export class ChartjsKeyboardPluginEngine {
     this.chart.update();
   };
 
-  constructor(chart: Chart, strategy: TNavigationStrategy) {
+  constructor(
+    chart: Chart,
+    strategy: TNavigationStrategy,
+    options: TChartjsKeyboardPluginEngineOptions = DEFAULT_OPTIONS
+  ) {
     this.chart = chart;
     this.strategy = strategy;
+    this.direction = options.direction || ENavigationDirection.LTR;
 
     this.initCanvas();
 

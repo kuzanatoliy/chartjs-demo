@@ -2,10 +2,10 @@ import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vitest } from 'vitest';
 
-import { ChartSelectStrategy } from './ChartSelectStrategy';
+import { ChartSelectDirection } from './ChartSelectDirection';
 import {
-  ENavigationStrategy,
   ENavigationDirection,
+  ENavigationStrategy,
 } from '../../../plugins/chartjs-keyboard-plugin';
 import { useChartContext } from '../ChartProvider';
 
@@ -20,14 +20,14 @@ vitest.mock('../ChartProvider', async () => {
   };
 });
 
-describe('ChartSelectStrategy', () => {
-  const onChangeStrategySpy = vitest.fn();
+describe('ChartSelectDirection', () => {
+  const onChangeDirectionSpy = vitest.fn();
 
   const DEFAULT_PROPS: ReturnType<typeof useChartContext> = {
     strategy: ENavigationStrategy.BALANCE,
     direction: ENavigationDirection.LTR,
-    onChangeStrategy: onChangeStrategySpy,
-    onChangeDirection: vitest.fn(),
+    onChangeStrategy: vitest.fn(),
+    onChangeDirection: onChangeDirectionSpy,
   };
 
   const renderComponent = (
@@ -36,7 +36,7 @@ describe('ChartSelectStrategy', () => {
     vitest
       .mocked(useChartContext)
       .mockReturnValue({ ...DEFAULT_PROPS, ...props });
-    return render(<ChartSelectStrategy />);
+    return render(<ChartSelectDirection />);
   };
 
   beforeEach(() => {
@@ -44,18 +44,18 @@ describe('ChartSelectStrategy', () => {
   });
 
   it('Should render component', () => {
-    renderComponent({ strategy: ENavigationStrategy.DATA });
+    renderComponent({ direction: ENavigationDirection.RTL });
     expect(useChartContext).toHaveBeenCalled();
     expect(screen.getByRole('combobox')).toBeDefined();
-    expect(screen.getByRole('combobox')).toHaveValue(ENavigationStrategy.DATA);
+    expect(screen.getByRole('combobox')).toHaveValue(ENavigationDirection.RTL);
   });
 
-  it('Should change strategy', async () => {
-    renderComponent({ onChangeStrategy: onChangeStrategySpy });
+  it('Should change direction', async () => {
+    renderComponent({ onChangeDirection: onChangeDirectionSpy });
     await userEvent.selectOptions(
       screen.getByRole('combobox'),
-      ENavigationStrategy.DATA
+      ENavigationDirection.RTL
     );
-    expect(onChangeStrategySpy).toHaveBeenCalledWith(ENavigationStrategy.DATA);
+    expect(onChangeDirectionSpy).toHaveBeenCalledWith(ENavigationDirection.RTL);
   });
 });

@@ -5,6 +5,7 @@ import {
   ChartProvider,
   ChartWrapper,
   ChartSelectStrategy,
+  ChartSelectDirection,
 } from '../../shared';
 import { data } from './data';
 import { options } from './options';
@@ -16,6 +17,7 @@ export const ScatterChart = () => (
         <ChartWrapper type='scatter' options={options} data={data} />
       </ChartContainer>
       <ChartSelectStrategy />
+      <ChartSelectDirection />
     </Card>
   </ChartProvider>
 );

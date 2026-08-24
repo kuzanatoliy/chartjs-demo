@@ -2,4 +2,5 @@ import type { TChartjsKeyboardPluginOptions } from '../../../../plugins/chartjs-
 
 export type TChartState = {
   strategy: Required<TChartjsKeyboardPluginOptions>['strategy'];
+  direction: Required<TChartjsKeyboardPluginOptions>['direction'];
 };

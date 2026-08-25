@@ -1,0 +1,16 @@
+name: update plugin
+on:
+  workflow_dispatch:
+    inputs:
+      plugin:
+        type: choice
+        description: Update plugin
+        options:
+          - chartjs-keyboard-plugin
+          - chartjs-legend-keyboard-plugin
+jobs:
+  pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: echo "${{ github.event.inputs.plugin }}

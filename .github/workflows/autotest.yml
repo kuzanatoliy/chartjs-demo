@@ -9,7 +9,7 @@ jobs:
   pipeline:
     runs-on: ubuntu-latest
     environment: autotests
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
     steps:
       - name: Trigger Autotests
         uses: actions/github-script@v9

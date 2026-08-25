@@ -13,4 +13,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: test
-        run: echo "${{ github.event.inputs.plugin }}
+        run: echo "${{ github.event.inputs.plugin }}"

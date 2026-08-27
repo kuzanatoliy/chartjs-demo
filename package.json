@@ -25,6 +25,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@fontsource/roboto": "^5.2.10",
+    "@kuzanatoliorg/algorithms": "^1.32.0",
     "@kuzanatoliorg/prettier-config": "^1.16.0",
     "chart.js": "^4.5.1",
     "prettier": "^3.9.5",

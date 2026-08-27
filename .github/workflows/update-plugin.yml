@@ -1,5 +1,6 @@
 name: update plugin
 on:
+  push:
   workflow_dispatch:
     inputs:
       plugin:
@@ -8,9 +9,42 @@ on:
         options:
           - chartjs-keyboard-plugin
           - chartjs-legend-keyboard-plugin
+env:
+  plugin: 'algorithms'
 jobs:
   pipeline:
+    if: ${{ github.event_name == 'workflow_dispatch' }}
     runs-on: ubuntu-latest
     steps:
       - name: test
         run: echo "${{ github.event.inputs.plugin }}"
+  check-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: |
+          LATEST_VERSION=$(npm view @kuzanatoliorg/${{ env.plugin }} version)
+          LATEST_MAJOR_VERSION=$(echo $LATEST_VERSION | cut -d. -f1)
+          CURRENT_VERSION=$(npm list @kuzanatoliorg/${{ env.plugin }} --json | jq -r '.dependencies.@kuzanatoliorg/${{ env.plugin }}.version')
+          LATEST_MAJOR_VERSION=$(echo $CURRENT_VERSION | cut -d. -f1)
+          if [ "$CURRENT_MAJOR" = "$LATEST_MAJOR" ]; then
+            echo "IS_MAJOR_VERSION_OUTDATED=false" >> $GITHUB_ENV
+          else
+            echo "IS_MAJOR_VERSION_OUTDATED=true" >> $GITHUB_ENV
+          fi
+          if [ "$CURRENT_MAJOR" = "$LATEST_MAJOR" ]; then
+            echo "IS_VERSION_OUTDATED=false" >> $GITHUB_ENV
+          else
+            echo "IS_VERSION_OUTDATED=true" >> $GITHUB_ENV
+          fi
+  exp:
+    if: env.IS_VERSION_OUTDATED != 'true'
+    needs: ['check-version']
+    runs-on: ubuntu-latest
+    steps:
+      - name: add git artifacts
+        run: |
+          git config --global user.email "njkznu@gmail.com"
+          git config --global user.name "kuzanatoliy"
+      - name: test
+        run: echo "${{ env.plugin }}"

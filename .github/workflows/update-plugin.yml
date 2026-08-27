@@ -42,7 +42,7 @@ jobs:
           echo $LATEST_MAJOR_VERSION
           echo $CURRENT_VERSION
           echo $CURRENT_MAJOR_VERSION
-
+          npm list @kuzanatoliorg/${{ env.plugin }}
       - name: add git artifacts
         run: |
           git config --global user.email "njkznu@gmail.com"

@@ -24,9 +24,9 @@ jobs:
       - name: check version
         id: check-version
         run: |
-          LATEST_VERSION=$(npm view @kuzanatoliorg/${{ env.plugin }} version)
+          LATEST_VERSION=$(npm view "@kuzanatoliorg/${{ env.plugin }}" version)
           LATEST_MAJOR_VERSION=$(echo $LATEST_VERSION | cut -d. -f1)
-          CURRENT_VERSION=$(npm list @kuzanatoliorg/${{ env.plugin }} --json | jq -r '.dependencies.@kuzanatoliorg/${{ env.plugin }}.version')
+          CURRENT_VERSION=$(npm list "@kuzanatoliorg/${{ env.plugin }}" --json | jq -r '.dependencies.@kuzanatoliorg/${{ env.plugin }}.version')
           CURRENT_MAJOR_VERSION=$(echo $CURRENT_VERSION | cut -d. -f1)
           if [ "$CURRENT_MAJOR_VERSION" = "$LATEST_MAJOR_VERSION" ]; then
             echo "IS_MAJOR_VERSION_OUTDATED=false" >> $GITHUB_OUTPUT

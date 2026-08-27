@@ -38,6 +38,11 @@ jobs:
           else
             echo "IS_VERSION_OUTDATED=true" >> $GITHUB_OUTPUT
           fi
+          echo $LATEST_VERSION
+          echo $LATEST_MAJOR_VERSION
+          echo $CURRENT_VERSION
+          echo $CURRENT_MAJOR_VERSION
+
       - name: add git artifacts
         run: |
           git config --global user.email "njkznu@gmail.com"

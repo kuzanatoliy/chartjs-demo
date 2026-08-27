@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: install dependencies
-        run: npm install
+        run: npm ci
       - name: testing
         run: npm run test
       - name: code style
@@ -65,7 +65,7 @@ jobs:
           git config --global user.email "njkznu@gmail.com"
           git config --global user.name "kuzanatoliy"
       - name: install dependencies
-        run: npm install
+        run: npm ci
       - name: build
         run: |
           export NODE_OPTIONS=--no-experimental-require-module

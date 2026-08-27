@@ -18,33 +18,33 @@ jobs:
     steps:
       - name: test
         run: echo "${{ github.event.inputs.plugin }}"
-  check-version:
+  exp:
     runs-on: ubuntu-latest
     steps:
-      - name: test
+      - name: check version
+        id: check-version
         run: |
           LATEST_VERSION=$(npm view @kuzanatoliorg/${{ env.plugin }} version)
           LATEST_MAJOR_VERSION=$(echo $LATEST_VERSION | cut -d. -f1)
           CURRENT_VERSION=$(npm list @kuzanatoliorg/${{ env.plugin }} --json | jq -r '.dependencies.@kuzanatoliorg/${{ env.plugin }}.version')
-          LATEST_MAJOR_VERSION=$(echo $CURRENT_VERSION | cut -d. -f1)
-          if [ "$CURRENT_MAJOR" = "$LATEST_MAJOR" ]; then
-            echo "IS_MAJOR_VERSION_OUTDATED=false" >> $GITHUB_ENV
+          CURRENT_MAJOR_VERSION=$(echo $CURRENT_VERSION | cut -d. -f1)
+          if [ "$CURRENT_MAJOR_VERSION" = "$LATEST_MAJOR_VERSION" ]; then
+            echo "IS_MAJOR_VERSION_OUTDATED=false" >> $GITHUB_OUTPUT
           else
-            echo "IS_MAJOR_VERSION_OUTDATED=true" >> $GITHUB_ENV
+            echo "IS_MAJOR_VERSION_OUTDATED=true" >> $GITHUB_OUTPUT
           fi
-          if [ "$CURRENT_MAJOR" = "$LATEST_MAJOR" ]; then
-            echo "IS_VERSION_OUTDATED=false" >> $GITHUB_ENV
+          if [ "$CURRENT_VERSION" = "$LATEST_VERSION" ]; then
+            echo "IS_VERSION_OUTDATED=false" >> $GITHUB_OUTPUT
           else
-            echo "IS_VERSION_OUTDATED=true" >> $GITHUB_ENV
+            echo "IS_VERSION_OUTDATED=true" >> $GITHUB_OUTPUT
           fi
-  exp:
-    if: env.IS_VERSION_OUTDATED != 'true'
-    needs: ['check-version']
-    runs-on: ubuntu-latest
-    steps:
       - name: add git artifacts
         run: |
           git config --global user.email "njkznu@gmail.com"
           git config --global user.name "kuzanatoliy"
-      - name: test
-        run: echo "${{ env.plugin }}"
+      - name: major update
+        if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'true' }}
+        run: echo ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED }}
+      - name: minor update
+        if: ${{ steps.check-version.outputs.IS_VERSION_OUTDATED == 'true' }}
+        run: echo ${{ steps.check-version.outputs.IS_VERSION_OUTDATED }}

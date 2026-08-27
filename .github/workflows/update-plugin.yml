@@ -10,7 +10,7 @@ on:
           - chartjs-keyboard-plugin
           - chartjs-legend-keyboard-plugin
 env:
-  plugin: 'algorithms'
+  plugin: 'prettier-config'
 jobs:
   pipeline:
     if: ${{ github.event_name == 'workflow_dispatch' }}
@@ -53,8 +53,8 @@ jobs:
           git config --global user.email "njkznu@gmail.com"
           git config --global user.name "kuzanatoliy"
       - name: major update
-        if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'false' }}
+        if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'true' }}
         run: echo ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED }}
       - name: minor update
-        if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'true' && steps.check-version.outputs.IS_VERSION_OUTDATED == 'false' }}
+        if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'false' && steps.check-version.outputs.IS_VERSION_OUTDATED == 'true' }}
         run: echo ${{ steps.check-version.outputs.IS_VERSION_OUTDATED }}

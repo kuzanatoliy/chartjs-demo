@@ -53,8 +53,8 @@ jobs:
           git config --global user.email "njkznu@gmail.com"
           git config --global user.name "kuzanatoliy"
       - name: major update
-        if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'true' }}
+        if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'false' }}
         run: echo ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED }}
       - name: minor update
-        if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'false' && steps.check-version.outputs.IS_VERSION_OUTDATED == 'true' }}
+        if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'true' && steps.check-version.outputs.IS_VERSION_OUTDATED == 'false' }}
         run: echo ${{ steps.check-version.outputs.IS_VERSION_OUTDATED }}

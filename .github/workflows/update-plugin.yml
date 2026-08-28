@@ -9,6 +9,8 @@ on:
         options:
           - chartjs-keyboard-plugin
           - chartjs-legend-keyboard-plugin
+permissions:
+  contents: write
 env:
   plugin: 'prettier-config'
 jobs:
@@ -57,4 +59,7 @@ jobs:
         run: echo ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED }}
       - name: minor update
         if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'false' && steps.check-version.outputs.IS_VERSION_OUTDATED == 'true' }}
-        run: echo ${{ steps.check-version.outputs.IS_VERSION_OUTDATED }}
+        run: |
+          npm update @kuzanatoliorg/${{ env.plugin }} --save
+          git commit -am "chore: CD-AUTO minor update @kuzanatoliorg/${{ env.plugin }} package"
+          git push

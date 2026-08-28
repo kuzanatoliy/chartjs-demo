@@ -36,7 +36,7 @@
     "@commitlint/config-conventional": "^21.2.0",
     "@eslint/js": "^10.0.1",
     "@kuzanatoliorg/commitlint-config": "^1.4.0",
-    "@kuzanatoliorg/prettier-config": "1.1.0",
+    "@kuzanatoliorg/prettier-config": "^1.1.0",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.4",

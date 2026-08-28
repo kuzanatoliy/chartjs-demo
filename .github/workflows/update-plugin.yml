@@ -40,6 +40,7 @@ jobs:
           LATEST_MAJOR_VERSION=$(echo $LATEST_VERSION | cut -d. -f1)
           CURRENT_VERSION=$(npm list @kuzanatoliorg/${{ env.plugin }} --json | jq -r '.dependencies.["@kuzanatoliorg/${{ env.plugin }}"].version')
           CURRENT_MAJOR_VERSION=$(echo $CURRENT_VERSION | cut -d. -f1)
+          echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_OUTPUT
           if [ "$CURRENT_MAJOR_VERSION" = "$LATEST_MAJOR_VERSION" ]; then
             echo "IS_MAJOR_VERSION_OUTDATED=false" >> $GITHUB_OUTPUT
           else
@@ -60,6 +61,7 @@ jobs:
       - name: minor update
         if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'false' && steps.check-version.outputs.IS_VERSION_OUTDATED == 'true' }}
         run: |
-          npm update @kuzanatoliorg/${{ env.plugin }} --save
+          npm approve-scripts --allow-scripts-pending  
+          npm install @kuzanatoliorg/${{ env.plugin }}@${{steps.check-version.outputs.CURRENT_VERSION}} --save
           git commit -am "chore: CD-AUTO minor update @kuzanatoliorg/${{ env.plugin }} package"
           git push

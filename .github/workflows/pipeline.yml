@@ -1,6 +1,6 @@
 name: pipeline
 on:
-  push:
+  #  push:
   workflow_dispatch:
   workflow_run:
     workflows: ['update plugin']

@@ -1,5 +1,11 @@
 name: pipeline
-on: [push, workflow_dispatch]
+on:
+  push:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ['update plugin']
+    types:
+      - completed
 permissions:
   contents: write
 jobs:

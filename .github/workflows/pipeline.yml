@@ -2,10 +2,7 @@ name: pipeline
 on:
   #  push:
   workflow_dispatch:
-  workflow_run:
-    workflows: ['update-plugin']
-    types:
-      - completed
+  workflow_call:
 permissions:
   contents: write
 jobs:

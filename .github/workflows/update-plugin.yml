@@ -62,6 +62,6 @@ jobs:
         if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'false' && steps.check-version.outputs.IS_VERSION_OUTDATED == 'true' }}
         run: |
           npm approve-scripts --allow-scripts-pending  
-          npm install @kuzanatoliorg/${{ env.plugin }}@${{steps.check-version.outputs.CURRENT_VERSION}} --save
+          npm install @kuzanatoliorg/${{ env.plugin }}@${{steps.check-version.outputs.LATEST_VERSION}} --save
           git commit -am "chore: CD-AUTO minor update @kuzanatoliorg/${{ env.plugin }} package"
           git push

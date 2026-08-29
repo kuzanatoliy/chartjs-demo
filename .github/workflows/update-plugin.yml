@@ -25,6 +25,8 @@ jobs:
     strategy:
       matrix:
         node-version: [24.x]
+    outputs:
+      SHOULD_RUN_MAIN_PIPELINE: ${{ steps.minor-update.outputs.SHOULD_RUN_MAIN_PIPELINE }}
     steps:
       - uses: actions/checkout@v7
       - name: Use Node.js ${{ matrix.node-version }}
@@ -56,9 +58,11 @@ jobs:
           git config --global user.email "njkznu@gmail.com"
           git config --global user.name "kuzanatoliy"
       - name: major update
+        id: major-update
         if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'true' }}
         run: echo ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED }}
       - name: minor update
+        id: minor-update
         if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'false' && steps.check-version.outputs.IS_VERSION_OUTDATED == 'true' }}
         run: |
           npm approve-scripts --allow-scripts-pending  
@@ -68,9 +72,5 @@ jobs:
           echo "SHOULD_RUN_MAIN_PIPELINE=true" >> "$GITHUB_OUTPUT"
   call-main-pipeline:
     needs: ['exp']
-    runs-on: ubuntu-latest
-    #  if: ${{ needs.exp.outputs.SHOULD_RUN_MAIN_PIPELINE == 'true' }}
-    # uses: ./.github/workflows/pipeline.yml
-    steps:
-      - name: test
-        run: echo ${{ needs.exp.outputs.SHOULD_RUN_MAIN_PIPELINE == 'true' }}
+    if: ${{ needs.exp.outputs.SHOULD_RUN_MAIN_PIPELINE == 'true' }}
+    uses: ./.github/workflows/pipeline.yml

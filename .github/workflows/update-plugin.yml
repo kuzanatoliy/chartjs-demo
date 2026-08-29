@@ -70,8 +70,7 @@ jobs:
           git commit -am "chore: CD-AUTO major update @kuzanatoliorg/${{ env.plugin }} package"
           git push --set-upstream origin $BRANCH_NAME
           gh pr create \
-            --base main \
-            --head $BRANCH_NAME \
+            --base master \
             --title "CD-AUTO: major update @kuzanatoliorg/${{ env.plugin }}" \
             --body "CD-AUTO: major update @kuzanatoliorg/${{ env.plugin }}" \
             --reviewer kuzanatoliy \

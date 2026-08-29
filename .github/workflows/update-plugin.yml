@@ -8,9 +8,87 @@ on:
         options:
           - chartjs-keyboard-plugin
           - chartjs-legend-keyboard-plugin
+permissions:
+  contents: write
+  pull-requests: write
 jobs:
   pipeline:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [24.x]
+    outputs:
+      SHOULD_RUN_MAIN_PIPELINE: ${{ steps.minor-update.outputs.SHOULD_RUN_MAIN_PIPELINE }}
     steps:
-      - name: test
-        run: echo "${{ github.event.inputs.plugin }}"
+      - uses: actions/checkout@v7
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v7
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: install
+        run: npm ci
+      - name: check version
+        id: check-version
+        run: |
+          LATEST_VERSION=$(npm view @kuzanatoliorg/${{ github.event.inputs.plugin }} version)
+          LATEST_MAJOR_VERSION=$(echo $LATEST_VERSION | cut -d. -f1)
+          CURRENT_VERSION=$(npm list @kuzanatoliorg/${{ github.event.inputs.plugin }} --json | jq -r '.dependencies.["@kuzanatoliorg/${{ github.event.inputs.plugin }}"].version')
+          CURRENT_MAJOR_VERSION=$(echo $CURRENT_VERSION | cut -d. -f1)
+          echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_OUTPUT
+          if [ "$CURRENT_MAJOR_VERSION" = "$LATEST_MAJOR_VERSION" ]; then
+            echo "IS_MAJOR_VERSION_OUTDATED=false" >> $GITHUB_OUTPUT
+          else
+            echo "IS_MAJOR_VERSION_OUTDATED=true" >> $GITHUB_OUTPUT
+          fi
+          if [ "$CURRENT_VERSION" = "$LATEST_VERSION" ]; then
+            echo "IS_VERSION_OUTDATED=false" >> $GITHUB_OUTPUT
+          else
+            echo "IS_VERSION_OUTDATED=true" >> $GITHUB_OUTPUT
+          fi
+      - name: add git artifacts
+        run: |
+          git config --global user.email "njkznu@gmail.com"
+          git config --global user.name "kuzanatoliy"
+      - name: check and close duplicate prs
+        env:
+          GH_TOKEN: ${{secrets.GH_TOKEN}}
+        if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'true' }}
+        run: |
+          PR_NUMBERS=$(gh pr list --state open --json number,title --jq ".[] | select(.title | contains(\"CD-AUTO: major update @kuzanatoliorg/${{ github.event.inputs.plugin }}\")) | .number")
+          if [ -z "$PR_NUMBERS" ]; then
+            echo "No matching open pull requests found."
+          else
+            for PR in $PR_NUMBERS; do
+              echo "Closing PR #$PR..."
+              gh pr close "$PR" --comment "Automatically closed by CI as duplicate"
+            done
+          fi
+      - name: major update
+        id: major-update
+        env:
+          GH_TOKEN: ${{secrets.GH_TOKEN}}
+        if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'true' }}
+        run: |
+          BRANCH_NAME=auto-package-update-ms-$(date +%s%3N)
+          git checkout -b $BRANCH_NAME
+          npm install @kuzanatoliorg/${{ github.event.inputs.plugin }}@${{steps.check-version.outputs.LATEST_VERSION}} --save
+          git commit -am "chore: CD-AUTO major update @kuzanatoliorg/${{ github.event.inputs.plugin }} package"
+          git push --set-upstream origin $BRANCH_NAME
+          gh pr create \
+            --base master \
+            --title "CD-AUTO: major update @kuzanatoliorg/${{ github.event.inputs.plugin }}" \
+            --body "CD-AUTO: major update @kuzanatoliorg/${{ github.event.inputs.plugin }}" \
+            --reviewer kuzanatoliy \
+            --assignee kuzanatoliy \
+      - name: minor update
+        id: minor-update
+        if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'false' && steps.check-version.outputs.IS_VERSION_OUTDATED == 'true' }}
+        run: |
+          npm install @kuzanatoliorg/${{ github.event.inputs.plugin }}@${{steps.check-version.outputs.LATEST_VERSION}} --save
+          git commit -am "chore: CD-AUTO minor update @kuzanatoliorg/${{ github.event.inputs.plugin }} package"
+          git push
+          echo "SHOULD_RUN_MAIN_PIPELINE=true" >> "$GITHUB_OUTPUT"
+  call-main-pipeline:
+    needs: ['pipeline']
+    if: ${{ needs.pipeline.outputs.SHOULD_RUN_MAIN_PIPELINE == 'true' }}
+    uses: ./.github/workflows/pipeline.yml

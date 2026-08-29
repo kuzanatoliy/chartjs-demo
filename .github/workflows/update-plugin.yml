@@ -70,6 +70,7 @@ jobs:
           gh pr create \
             --base main \
             --title "CD-AUTO: major update @kuzanatoliorg/${{ env.plugin }}" \
+            --body "CD-AUTO: major update @kuzanatoliorg/${{ env.plugin }}" \
             --reviewer kuzanatoliy \
             --assignee kuzanatoliy \
       - name: minor update

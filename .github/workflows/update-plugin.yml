@@ -63,7 +63,7 @@ jobs:
           GH_TOKEN: ${{secrets.GH_TOKEN}}
         if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'true' }}
         run: |
-          PR_NUMBERS=$(gh pr list --state open --json number,title --jq ".[] | select(.title | contains(\"CD-AUTO major update @kuzanatoliorg/${{ env.plugin }} package\")) | .number")
+          PR_NUMBERS=$(gh pr list --state open --json number,title --jq ".[] | select(.title | contains(\"CD-AUTO: major update @kuzanatoliorg/${{ env.plugin }}\")) | .number")
           if [ -z "$PR_NUMBERS" ]; then
             echo "No matching open pull requests found."
           else

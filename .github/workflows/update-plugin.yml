@@ -68,5 +68,5 @@ jobs:
           echo "SHOULD_RUN_MAIN_PIPELINE=true" >> "$GITHUB_OUTPUT"
   call-main-pipeline:
     needs: ['exp']
-    if: ${{ needs.exp.outputs.SHOULD_RUN_MAIN_PIPELINE == 'true' }}
+    #  if: ${{ needs.exp.outputs.SHOULD_RUN_MAIN_PIPELINE == 'true' }}
     uses: ./.github/workflows/pipeline.yml

@@ -1,6 +1,5 @@
 name: update plugin
 on:
-  push:
   workflow_dispatch:
     inputs:
       plugin:
@@ -12,16 +11,8 @@ on:
 permissions:
   contents: write
   pull-requests: write
-env:
-  plugin: 'prettier-config'
 jobs:
   pipeline:
-    if: ${{ github.event_name == 'workflow_dispatch' }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: test
-        run: echo "${{ github.event.inputs.plugin }}"
-  exp:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -39,9 +30,9 @@ jobs:
       - name: check version
         id: check-version
         run: |
-          LATEST_VERSION=$(npm view @kuzanatoliorg/${{ env.plugin }} version)
+          LATEST_VERSION=$(npm view @kuzanatoliorg/${{ github.event.inputs.plugin }} version)
           LATEST_MAJOR_VERSION=$(echo $LATEST_VERSION | cut -d. -f1)
-          CURRENT_VERSION=$(npm list @kuzanatoliorg/${{ env.plugin }} --json | jq -r '.dependencies.["@kuzanatoliorg/${{ env.plugin }}"].version')
+          CURRENT_VERSION=$(npm list @kuzanatoliorg/${{ github.event.inputs.plugin }} --json | jq -r '.dependencies.["@kuzanatoliorg/${{ github.event.inputs.plugin }}"].version')
           CURRENT_MAJOR_VERSION=$(echo $CURRENT_VERSION | cut -d. -f1)
           echo "LATEST_VERSION=$LATEST_VERSION" >> $GITHUB_OUTPUT
           if [ "$CURRENT_MAJOR_VERSION" = "$LATEST_MAJOR_VERSION" ]; then
@@ -63,7 +54,7 @@ jobs:
           GH_TOKEN: ${{secrets.GH_TOKEN}}
         if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'true' }}
         run: |
-          PR_NUMBERS=$(gh pr list --state open --json number,title --jq ".[] | select(.title | contains(\"CD-AUTO: major update @kuzanatoliorg/${{ env.plugin }}\")) | .number")
+          PR_NUMBERS=$(gh pr list --state open --json number,title --jq ".[] | select(.title | contains(\"CD-AUTO: major update @kuzanatoliorg/${{ github.event.inputs.plugin }}\")) | .number")
           if [ -z "$PR_NUMBERS" ]; then
             echo "No matching open pull requests found."
           else
@@ -80,24 +71,24 @@ jobs:
         run: |
           BRANCH_NAME=auto-package-update-ms-$(date +%s%3N)
           git checkout -b $BRANCH_NAME
-          npm install @kuzanatoliorg/${{ env.plugin }}@${{steps.check-version.outputs.LATEST_VERSION}} --save
-          git commit -am "chore: CD-AUTO major update @kuzanatoliorg/${{ env.plugin }} package"
+          npm install @kuzanatoliorg/${{ github.event.inputs.plugin }}@${{steps.check-version.outputs.LATEST_VERSION}} --save
+          git commit -am "chore: CD-AUTO major update @kuzanatoliorg/${{ github.event.inputs.plugin }} package"
           git push --set-upstream origin $BRANCH_NAME
           gh pr create \
             --base master \
-            --title "CD-AUTO: major update @kuzanatoliorg/${{ env.plugin }}" \
-            --body "CD-AUTO: major update @kuzanatoliorg/${{ env.plugin }}" \
+            --title "CD-AUTO: major update @kuzanatoliorg/${{ github.event.inputs.plugin }}" \
+            --body "CD-AUTO: major update @kuzanatoliorg/${{ github.event.inputs.plugin }}" \
             --reviewer kuzanatoliy \
             --assignee kuzanatoliy \
       - name: minor update
         id: minor-update
         if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'false' && steps.check-version.outputs.IS_VERSION_OUTDATED == 'true' }}
         run: |
-          npm install @kuzanatoliorg/${{ env.plugin }}@${{steps.check-version.outputs.LATEST_VERSION}} --save
-          git commit -am "chore: CD-AUTO minor update @kuzanatoliorg/${{ env.plugin }} package"
+          npm install @kuzanatoliorg/${{ github.event.inputs.plugin }}@${{steps.check-version.outputs.LATEST_VERSION}} --save
+          git commit -am "chore: CD-AUTO minor update @kuzanatoliorg/${{ github.event.inputs.plugin }} package"
           git push
           echo "SHOULD_RUN_MAIN_PIPELINE=true" >> "$GITHUB_OUTPUT"
   call-main-pipeline:
-    needs: ['exp']
-    if: ${{ needs.exp.outputs.SHOULD_RUN_MAIN_PIPELINE == 'true' }}
+    needs: ['pipeline']
+    if: ${{ needs.pipeline.outputs.SHOULD_RUN_MAIN_PIPELINE == 'true' }}
     uses: ./.github/workflows/pipeline.yml

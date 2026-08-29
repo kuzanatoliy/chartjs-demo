@@ -64,9 +64,11 @@ jobs:
           GH_TOKEN: ${{secrets.GH_TOKEN}}
         if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'true' }}
         run: |
-          git checkout -b auto-package-update-ms=$(date +%s%3N)
+          BRANCH_NAME=auto-package-update-ms-$(date +%s%3N)
+          git checkout -b $BRANCH_NAME
           npm install @kuzanatoliorg/${{ env.plugin }}@${{steps.check-version.outputs.LATEST_VERSION}} --save
           git commit -am "chore: CD-AUTO major update @kuzanatoliorg/${{ env.plugin }} package"
+          git push --set-upstream origin $BRANCH_NAME
           gh pr create \
             --base main \
             --title "CD-AUTO: major update @kuzanatoliorg/${{ env.plugin }}" \

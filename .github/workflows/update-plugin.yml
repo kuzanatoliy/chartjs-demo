@@ -11,6 +11,7 @@ on:
           - chartjs-legend-keyboard-plugin
 permissions:
   contents: write
+  pull-requests: write
 env:
   plugin: 'prettier-config'
 jobs:
@@ -60,12 +61,19 @@ jobs:
       - name: major update
         id: major-update
         if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'true' }}
-        run: echo ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED }}
+        run: |
+          git checkout -b auto-package-update-ms=$(date +%s%3N)
+          npm install @kuzanatoliorg/${{ env.plugin }}@${{steps.check-version.outputs.LATEST_VERSION}} --save
+          git commit -am "chore: CD-AUTO major update @kuzanatoliorg/${{ env.plugin }} package"
+          gh pr create \
+            --base main \
+            --title "CD-AUTO: major update @kuzanatoliorg/${{ env.plugin }}" \
+            --reviewer kuzanatoliy \
+            --assignee kuzanatoliy \
       - name: minor update
         id: minor-update
         if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'false' && steps.check-version.outputs.IS_VERSION_OUTDATED == 'true' }}
         run: |
-          npm approve-scripts --allow-scripts-pending  
           npm install @kuzanatoliorg/${{ env.plugin }}@${{steps.check-version.outputs.LATEST_VERSION}} --save
           git commit -am "chore: CD-AUTO minor update @kuzanatoliorg/${{ env.plugin }} package"
           git push

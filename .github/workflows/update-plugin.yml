@@ -60,6 +60,8 @@ jobs:
           git config --global user.name "kuzanatoliy"
       - name: major update
         id: major-update
+        env:
+          GH_TOKEN: ${{secrets.GH_TOKEN}}
         if: ${{ steps.check-version.outputs.IS_MAJOR_VERSION_OUTDATED == 'true' }}
         run: |
           git checkout -b auto-package-update-ms=$(date +%s%3N)

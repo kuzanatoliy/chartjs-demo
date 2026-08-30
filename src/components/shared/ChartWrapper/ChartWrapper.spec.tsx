@@ -6,9 +6,9 @@ import * as chartProvider from '../ChartProvider';
 
 import { ChartWrapper, type TChartWrapperProps } from './ChartWrapper';
 import {
-  ENavigationDirection,
-  ENavigationStrategy,
-} from '../../../plugins/chartjs-keyboard-plugin';
+  NavigationDirection,
+  NavigationStrategy,
+} from '@kuzanatoliorg/chartjs-keyboard-plugin';
 
 vitest.mock('react-chartjs-2', async () => {
   const origin =
@@ -69,7 +69,7 @@ describe('ChartWrapper', () => {
         options: expect.objectContaining({
           plugins: expect.objectContaining({
             chartjsKeyboardPlugin: expect.objectContaining({
-              strategy: ENavigationStrategy.BALANCE,
+              strategy: NavigationStrategy.BALANCE,
             }),
           }),
         }),
@@ -86,17 +86,17 @@ describe('ChartWrapper', () => {
           plugins: expect.objectContaining({
             legend: expect.objectContaining({
               rtl: false,
-              textDirection: ENavigationDirection.LTR,
+              textDirection: NavigationDirection.LTR,
             }),
             tooltip: expect.objectContaining({
               rtl: false,
-              textDirection: ENavigationDirection.LTR,
+              textDirection: NavigationDirection.LTR,
             }),
             title: expect.objectContaining({
-              textDirection: ENavigationDirection.LTR,
+              textDirection: NavigationDirection.LTR,
             }),
             chartjsKeyboardPlugin: expect.objectContaining({
-              direction: ENavigationDirection.LTR,
+              direction: NavigationDirection.LTR,
             }),
           }),
           scales: expect.objectContaining({
@@ -115,8 +115,8 @@ describe('ChartWrapper', () => {
 
   it('Should use rtl direction', () => {
     vitest.spyOn(chartProvider, 'useChartContext').mockReturnValueOnce({
-      strategy: ENavigationStrategy.BALANCE,
-      direction: ENavigationDirection.RTL,
+      strategy: NavigationStrategy.BALANCE,
+      direction: NavigationDirection.RTL,
     } as chartProvider.TChartContext);
     renderComponent();
     expect(Chart).toHaveBeenCalledWith(
@@ -125,17 +125,17 @@ describe('ChartWrapper', () => {
           plugins: expect.objectContaining({
             legend: expect.objectContaining({
               rtl: true,
-              textDirection: ENavigationDirection.RTL,
+              textDirection: NavigationDirection.RTL,
             }),
             tooltip: expect.objectContaining({
               rtl: true,
-              textDirection: ENavigationDirection.RTL,
+              textDirection: NavigationDirection.RTL,
             }),
             title: expect.objectContaining({
-              textDirection: ENavigationDirection.RTL,
+              textDirection: NavigationDirection.RTL,
             }),
             chartjsKeyboardPlugin: expect.objectContaining({
-              direction: ENavigationDirection.RTL,
+              direction: NavigationDirection.RTL,
             }),
           }),
           scales: expect.objectContaining({

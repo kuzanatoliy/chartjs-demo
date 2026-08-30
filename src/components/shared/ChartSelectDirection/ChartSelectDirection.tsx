@@ -1,9 +1,12 @@
 import { useCallback, useId, type ChangeEvent } from 'react';
 import { useChartContext } from '../ChartProvider';
-import { ENavigationDirection } from '../../../plugins/chartjs-keyboard-plugin';
+import {
+  NavigationDirection,
+  type TNavigationDirection,
+} from '@kuzanatoliorg/chartjs-keyboard-plugin';
 import styles from './ChartSelectDirection.module.scss';
 
-const directions = [ENavigationDirection.LTR, ENavigationDirection.RTL];
+const directions = [NavigationDirection.LTR, NavigationDirection.RTL];
 
 export const ChartSelectDirection = () => {
   const { direction, onChangeDirection } = useChartContext();
@@ -11,7 +14,7 @@ export const ChartSelectDirection = () => {
 
   const changeHandler = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {
-      onChangeDirection(event.target.value as ENavigationDirection);
+      onChangeDirection(event.target.value as TNavigationDirection);
     },
     [onChangeDirection]
   );

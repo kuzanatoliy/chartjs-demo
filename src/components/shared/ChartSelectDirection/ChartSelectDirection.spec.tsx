@@ -1,12 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import {
+  NavigationDirection,
+  NavigationStrategy,
+} from '@kuzanatoliorg/chartjs-keyboard-plugin';
 
 import { ChartSelectDirection } from './ChartSelectDirection';
-import {
-  ENavigationDirection,
-  ENavigationStrategy,
-} from '../../../plugins/chartjs-keyboard-plugin';
 import { useChartContext } from '../ChartProvider';
 
 vitest.mock('../ChartProvider', async () => {
@@ -24,8 +24,8 @@ describe('ChartSelectDirection', () => {
   const onChangeDirectionSpy = vitest.fn();
 
   const DEFAULT_PROPS: ReturnType<typeof useChartContext> = {
-    strategy: ENavigationStrategy.BALANCE,
-    direction: ENavigationDirection.LTR,
+    strategy: NavigationStrategy.BALANCE,
+    direction: NavigationDirection.LTR,
     onChangeStrategy: vitest.fn(),
     onChangeDirection: onChangeDirectionSpy,
   };
@@ -44,18 +44,18 @@ describe('ChartSelectDirection', () => {
   });
 
   it('Should render component', () => {
-    renderComponent({ direction: ENavigationDirection.RTL });
+    renderComponent({ direction: NavigationDirection.RTL });
     expect(useChartContext).toHaveBeenCalled();
     expect(screen.getByRole('combobox')).toBeDefined();
-    expect(screen.getByRole('combobox')).toHaveValue(ENavigationDirection.RTL);
+    expect(screen.getByRole('combobox')).toHaveValue(NavigationDirection.RTL);
   });
 
   it('Should change direction', async () => {
     renderComponent({ onChangeDirection: onChangeDirectionSpy });
     await userEvent.selectOptions(
       screen.getByRole('combobox'),
-      ENavigationDirection.RTL
+      NavigationDirection.RTL
     );
-    expect(onChangeDirectionSpy).toHaveBeenCalledWith(ENavigationDirection.RTL);
+    expect(onChangeDirectionSpy).toHaveBeenCalledWith(NavigationDirection.RTL);
   });
 });

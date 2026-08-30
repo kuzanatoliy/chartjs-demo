@@ -1,4 +1,5 @@
-import { ENavigationStrategy } from '../../../plugins/chartjs-keyboard-plugin';
+import { NavigationStrategy } from '@kuzanatoliorg/chartjs-keyboard-plugin';
+
 import { data } from './data';
 import { options } from './options';
 import {
@@ -11,7 +12,7 @@ import {
 } from '../../shared';
 
 export const MultitypeLineStackedBarChart = () => (
-  <ChartProvider init-strategy={ENavigationStrategy.DATA}>
+  <ChartProvider init-strategy={NavigationStrategy.DATA}>
     <Card>
       <ChartContainer>
         <ChartWrapper type='bar' options={options} data={data} />

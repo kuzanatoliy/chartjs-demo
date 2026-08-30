@@ -1,5 +1,5 @@
 import { ChartType } from 'chart.js';
-import { type TChartjsKeyboardPluginOptions } from './src/plugins/chartjs-keyboard-plugin/types';
+import { type TChartjsKeyboardPluginOptions } from '@kuzanatoliorg/chartjs-keyboard-plugin';
 
 // Define the shape of your plugin's configuration options
 export interface MyCustomPluginOptions {

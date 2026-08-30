@@ -1,14 +1,18 @@
 import { useCallback, useId, type ChangeEvent } from 'react';
+import {
+  NavigationStrategy,
+  type TNavigationStrategy,
+} from '@kuzanatoliorg/chartjs-keyboard-plugin';
+
 import { useChartContext } from '../ChartProvider';
-import { ENavigationStrategy } from '../../../plugins/chartjs-keyboard-plugin';
 import styles from './ChartSelectStrategy.module.scss';
 
 const strategies = [
-  ENavigationStrategy.BALANCE,
-  ENavigationStrategy.DATA,
-  ENavigationStrategy.DATASET,
-  ENavigationStrategy.DATASET_FIRST,
-  ENavigationStrategy.DATA_FIRST,
+  NavigationStrategy.BALANCE,
+  NavigationStrategy.DATA,
+  NavigationStrategy.DATASET,
+  NavigationStrategy.DATASET_FIRST,
+  NavigationStrategy.DATA_FIRST,
 ];
 
 export const ChartSelectStrategy = () => {
@@ -17,7 +21,7 @@ export const ChartSelectStrategy = () => {
 
   const changeHandler = useCallback(
     (event: ChangeEvent<HTMLSelectElement>) => {
-      onChangeStrategy(event.target.value as ENavigationStrategy);
+      onChangeStrategy(event.target.value as TNavigationStrategy);
     },
     [onChangeStrategy]
   );

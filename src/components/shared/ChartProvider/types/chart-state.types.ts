@@ -1,4 +1,4 @@
-import type { TChartjsKeyboardPluginOptions } from '../../../../plugins/chartjs-keyboard-plugin';
+import type { TChartjsKeyboardPluginOptions } from '@kuzanatoliorg/chartjs-keyboard-plugin';
 
 export type TChartState = {
   strategy: Required<TChartjsKeyboardPluginOptions>['strategy'];

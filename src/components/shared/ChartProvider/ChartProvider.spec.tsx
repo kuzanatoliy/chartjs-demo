@@ -2,7 +2,8 @@ import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vitest } from 'vitest';
 
 import { ChartProvider, type TChartProviderProps } from './ChartProvider';
-import { ENavigationStrategy } from '../../../plugins/chartjs-keyboard-plugin';
+import { NavigationStrategy } from '@kuzanatoliorg/chartjs-keyboard-plugin';
+
 import { useChartState } from './hooks';
 
 vitest.mock('./hooks', async () => {
@@ -35,10 +36,10 @@ describe('ChartProvider', () => {
   });
 
   it('Should render component with init strategy', () => {
-    renderComponent({ 'init-strategy': ENavigationStrategy.DATASET_FIRST });
+    renderComponent({ 'init-strategy': NavigationStrategy.DATASET_FIRST });
     expect(useChartState).toHaveBeenCalledWith(
       expect.objectContaining({
-        'init-strategy': ENavigationStrategy.DATASET_FIRST,
+        'init-strategy': NavigationStrategy.DATASET_FIRST,
       })
     );
   });

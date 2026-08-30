@@ -1,13 +1,13 @@
 import { createContext } from 'react';
 import {
-  ENavigationDirection,
-  ENavigationStrategy,
-} from '../../../plugins/chartjs-keyboard-plugin';
+  NavigationDirection,
+  NavigationStrategy,
+} from '@kuzanatoliorg/chartjs-keyboard-plugin';
 import type { TChartContext } from './types';
 
 export const DEFAULT_CHART_CONTEXT: TChartContext = {
-  strategy: ENavigationStrategy.BALANCE,
-  direction: ENavigationDirection.LTR,
+  strategy: NavigationStrategy.BALANCE,
+  direction: NavigationDirection.LTR,
   onChangeStrategy: () => {
     throw new Error('onChangeStratety in not available');
   },

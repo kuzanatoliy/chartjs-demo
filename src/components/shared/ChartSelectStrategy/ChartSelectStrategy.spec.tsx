@@ -4,9 +4,9 @@ import { beforeEach, describe, expect, it, vitest } from 'vitest';
 
 import { ChartSelectStrategy } from './ChartSelectStrategy';
 import {
-  ENavigationStrategy,
-  ENavigationDirection,
-} from '../../../plugins/chartjs-keyboard-plugin';
+  NavigationStrategy,
+  NavigationDirection,
+} from '@kuzanatoliorg/chartjs-keyboard-plugin';
 import { useChartContext } from '../ChartProvider';
 
 vitest.mock('../ChartProvider', async () => {
@@ -24,8 +24,8 @@ describe('ChartSelectStrategy', () => {
   const onChangeStrategySpy = vitest.fn();
 
   const DEFAULT_PROPS: ReturnType<typeof useChartContext> = {
-    strategy: ENavigationStrategy.BALANCE,
-    direction: ENavigationDirection.LTR,
+    strategy: NavigationStrategy.BALANCE,
+    direction: NavigationDirection.LTR,
     onChangeStrategy: onChangeStrategySpy,
     onChangeDirection: vitest.fn(),
   };
@@ -44,18 +44,18 @@ describe('ChartSelectStrategy', () => {
   });
 
   it('Should render component', () => {
-    renderComponent({ strategy: ENavigationStrategy.DATA });
+    renderComponent({ strategy: NavigationStrategy.DATA });
     expect(useChartContext).toHaveBeenCalled();
     expect(screen.getByRole('combobox')).toBeDefined();
-    expect(screen.getByRole('combobox')).toHaveValue(ENavigationStrategy.DATA);
+    expect(screen.getByRole('combobox')).toHaveValue(NavigationStrategy.DATA);
   });
 
   it('Should change strategy', async () => {
     renderComponent({ onChangeStrategy: onChangeStrategySpy });
     await userEvent.selectOptions(
       screen.getByRole('combobox'),
-      ENavigationStrategy.DATA
+      NavigationStrategy.DATA
     );
-    expect(onChangeStrategySpy).toHaveBeenCalledWith(ENavigationStrategy.DATA);
+    expect(onChangeStrategySpy).toHaveBeenCalledWith(NavigationStrategy.DATA);
   });
 });

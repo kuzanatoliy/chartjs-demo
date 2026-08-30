@@ -1,8 +1,9 @@
 import type { ChartData, ChartOptions, ChartType } from 'chart.js';
+import { NavigationDirection } from '@kuzanatoliorg/chartjs-keyboard-plugin';
 import { useMemo } from 'react';
+
 import { useChartContext } from '../ChartProvider';
 import { Chart } from 'react-chartjs-2';
-import { ENavigationDirection } from '../../../plugins/chartjs-keyboard-plugin';
 
 export type TChartWrapperProps<
   TOptions extends ChartOptions,
@@ -22,7 +23,7 @@ export const ChartWrapper = <
   const { strategy, direction } = useChartContext();
 
   const localOptions = useMemo(() => {
-    const isRtl = direction === ENavigationDirection.RTL;
+    const isRtl = direction === NavigationDirection.RTL;
     return {
       ...props.options,
       plugins: {

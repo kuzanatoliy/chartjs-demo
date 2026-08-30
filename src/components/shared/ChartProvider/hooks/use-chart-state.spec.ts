@@ -7,9 +7,9 @@ import {
   type TUseChartStateProps,
 } from './use-chart-state';
 import {
-  ENavigationDirection,
-  ENavigationStrategy,
-} from '../../../../plugins/chartjs-keyboard-plugin';
+  NavigationDirection,
+  NavigationStrategy,
+} from '@kuzanatoliorg/chartjs-keyboard-plugin';
 
 describe('use-chart-state', () => {
   const renderHook = (props: TUseChartStateProps = {}) =>
@@ -31,25 +31,25 @@ describe('use-chart-state', () => {
 
   it('Should validate init state', () => {
     const { result } = renderHook({
-      'init-strategy': ENavigationStrategy.DATA,
+      'init-strategy': NavigationStrategy.DATA,
     });
     expect(result.current.strategy).not.toBe(DEFAULT_CHART_STRATEGY);
-    expect(result.current.strategy).toBe(ENavigationStrategy.DATA);
+    expect(result.current.strategy).toBe(NavigationStrategy.DATA);
   });
 
   it('Should change strategy', () => {
     const { result } = renderHook({
-      'init-strategy': ENavigationStrategy.DATASET,
+      'init-strategy': NavigationStrategy.DATASET,
     });
-    expect(result.current.strategy).toBe(ENavigationStrategy.DATASET);
-    act(() => result.current.onChangeStrategy(ENavigationStrategy.DATA));
-    expect(result.current.strategy).toBe(ENavigationStrategy.DATA);
+    expect(result.current.strategy).toBe(NavigationStrategy.DATASET);
+    act(() => result.current.onChangeStrategy(NavigationStrategy.DATA));
+    expect(result.current.strategy).toBe(NavigationStrategy.DATA);
   });
 
   it('Should change direction', () => {
     const { result } = renderHook();
-    expect(result.current.direction).toBe(ENavigationDirection.LTR);
-    act(() => result.current.onChangeDirection(ENavigationDirection.RTL));
-    expect(result.current.direction).toBe(ENavigationDirection.RTL);
+    expect(result.current.direction).toBe(NavigationDirection.LTR);
+    act(() => result.current.onChangeDirection(NavigationDirection.RTL));
+    expect(result.current.direction).toBe(NavigationDirection.RTL);
   });
 });

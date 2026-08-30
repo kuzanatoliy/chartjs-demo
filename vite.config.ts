@@ -5,6 +5,11 @@ import svgr from 'vite-plugin-svgr';
 
 const vitestConfig = defineTestConfig({
   test: {
+    server: {
+      deps: {
+        inline: ['@kuzanatoliorg/chartjs-keyboard-plugin'],
+      },
+    },
     environment: 'jsdom',
     setupFiles: ['./vitest-setup.ts'],
     globals: true,

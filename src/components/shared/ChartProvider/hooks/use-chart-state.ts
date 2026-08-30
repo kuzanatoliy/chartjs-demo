@@ -1,16 +1,16 @@
 import { useCallback, useMemo, useState } from 'react';
 import type { TChartContext, TChartState } from '../types';
 import {
-  ENavigationDirection,
-  ENavigationStrategy,
-} from '../../../../plugins/chartjs-keyboard-plugin';
+  NavigationDirection,
+  NavigationStrategy,
+} from '@kuzanatoliorg/chartjs-keyboard-plugin';
 
 export type TUseChartStateProps = {
   ['init-strategy']?: TChartState['strategy'];
 };
 
-export const DEFAULT_CHART_STRATEGY = ENavigationStrategy.BALANCE;
-export const DEFAULT_CHART_DIRECTION = ENavigationDirection.LTR;
+export const DEFAULT_CHART_STRATEGY = NavigationStrategy.BALANCE;
+export const DEFAULT_CHART_DIRECTION = NavigationDirection.LTR;
 
 export const useChartState = (props: TUseChartStateProps) => {
   const [strategy, setStrategy] = useState<TChartState['strategy']>(

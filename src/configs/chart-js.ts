@@ -20,7 +20,7 @@ import {
   ScatterController,
   BubbleController,
 } from 'chart.js';
-import { chartjsKeyboardPlugin } from '../plugins/chartjs-keyboard-plugin/chartjs-keyboard-plugin';
+import { chartjsKeyboardPlugin } from '@kuzanatoliorg/chartjs-keyboard-plugin';
 
 ChartJS.register(
   CategoryScale,

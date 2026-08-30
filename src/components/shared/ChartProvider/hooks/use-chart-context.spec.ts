@@ -3,9 +3,9 @@ import { describe, expect, it } from 'vitest';
 import { useChartContext } from './use-chart-context';
 import { DEFAULT_CHART_CONTEXT } from '../ChartContext';
 import {
-  ENavigationDirection,
-  ENavigationStrategy,
-} from '../../../../plugins/chartjs-keyboard-plugin';
+  NavigationDirection,
+  NavigationStrategy,
+} from '@kuzanatoliorg/chartjs-keyboard-plugin';
 
 describe('use-chart-context', () => {
   const renderHook = () => render(useChartContext);
@@ -19,7 +19,7 @@ describe('use-chart-context', () => {
   it('Should call defoult onChangeStrategy', () => {
     const { result } = renderHook();
     try {
-      result.current.onChangeStrategy(ENavigationStrategy.DATA);
+      result.current.onChangeStrategy(NavigationStrategy.DATA);
       throw new Error('Not call default handler');
     } catch (error) {
       expect((error as Error).message).toBe(
@@ -31,7 +31,7 @@ describe('use-chart-context', () => {
   it('Should call defoult onChangeDirection', () => {
     const { result } = renderHook();
     try {
-      result.current.onChangeDirection(ENavigationDirection.RTL);
+      result.current.onChangeDirection(NavigationDirection.RTL);
       throw new Error('Not call default handler');
     } catch (error) {
       expect((error as Error).message).toBe(

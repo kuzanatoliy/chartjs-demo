@@ -1,4 +1,5 @@
-import { ENavigationStrategy } from '../../../plugins/chartjs-keyboard-plugin';
+import { NavigationStrategy } from '@kuzanatoliorg/chartjs-keyboard-plugin';
+
 import {
   Card,
   ChartContainer,
@@ -11,7 +12,7 @@ import { data } from './data';
 import { options } from './options';
 
 export const HorizontalBarChart = () => (
-  <ChartProvider init-strategy={ENavigationStrategy.BALANCE}>
+  <ChartProvider init-strategy={NavigationStrategy.BALANCE}>
     <Card>
       <ChartContainer>
         <ChartWrapper type='bar' options={options} data={data} />

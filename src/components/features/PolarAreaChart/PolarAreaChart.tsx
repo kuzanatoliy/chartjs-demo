@@ -1,4 +1,5 @@
-import { ENavigationStrategy } from '../../../plugins/chartjs-keyboard-plugin';
+import { NavigationStrategy } from '@kuzanatoliorg/chartjs-keyboard-plugin';
+
 import {
   Card,
   ChartContainer,
@@ -11,7 +12,7 @@ import { data } from './data';
 import { options } from './options';
 
 export const PolarAreaChart = () => (
-  <ChartProvider init-strategy={ENavigationStrategy.DATA_FIRST}>
+  <ChartProvider init-strategy={NavigationStrategy.DATA_FIRST}>
     <Card>
       <ChartContainer>
         <ChartWrapper type='polarArea' options={options} data={data} />

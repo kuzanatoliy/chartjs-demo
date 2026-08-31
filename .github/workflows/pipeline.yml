@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
   workflow_call:
     inputs:
-      forced:
+      called:
         required: false
         type: boolean
         default: true
@@ -23,7 +23,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: update branch
-        if: inputs.forced
+        if: inputs.called
         run: git pull
       - name: install dependencies
         run: npm ci
@@ -45,17 +45,17 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: update branch
-        if: inputs.forced
+        if: inputs.called
         run: git pull
       - name: add git artifacts
         run: |
           git config --global user.email "njkznu@gmail.com"
           git config --global user.name "kuzanatoliy"
       - name: add minor version
-        if: github.event_name == 'push'
+        if: ${{github.event_name == 'push' || inputs.called}}
         run: npm version minor
       - name: major tag
-        if: ${{ github.event_name == 'workflow_dispatch' && !inputs.forced }}
+        if: ${{ github.event_name == 'workflow_dispatch' && !inputs.called }}
         run: npm version major
       - name: publis version
         run: |
@@ -75,7 +75,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: update branch
-        if: inputs.forced
+        if: inputs.called
         run: git pull
       - name: add git artifacts
         run: |

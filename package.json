@@ -25,7 +25,7 @@
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@fontsource/roboto": "^5.2.10",
-    "@kuzanatoliorg/chartjs-keyboard-plugin": "^0.15.0",
+    "@kuzanatoliorg/chartjs-keyboard-plugin": "^0.16.0",
     "chart.js": "^4.5.1",
     "react": "^19.2.7",
     "react-chartjs-2": "^5.3.1",

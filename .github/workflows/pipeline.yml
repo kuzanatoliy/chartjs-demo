@@ -17,6 +17,8 @@ jobs:
         uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
+      - name: update branch
+        run: git pull
       - name: install dependencies
         run: npm ci
       - name: testing

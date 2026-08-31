@@ -3,6 +3,11 @@ on:
   push:
   workflow_dispatch:
   workflow_call:
+    inputs:
+      forced:
+        required: false
+        type: boolean
+        default: true
 permissions:
   contents: write
 jobs:
@@ -18,7 +23,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: update branch
-        if: github.event_name == 'workflow_call'
+        if: inputs.forced
         run: git pull
       - name: install dependencies
         run: npm ci
@@ -40,7 +45,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: update branch
-        if: github.event_name == 'workflow_call'
+        if: inputs.forced
         run: git pull
       - name: add git artifacts
         run: |
@@ -50,7 +55,7 @@ jobs:
         if: github.event_name == 'push'
         run: npm version minor
       - name: major tag
-        if: github.event_name == 'workflow_dispatch'
+        if: ${{ github.event_name == 'workflow_dispatch' && !inputs.forced }}
         run: npm version major
       - name: publis version
         run: |
@@ -70,7 +75,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: update branch
-        if: github.event_name == 'workflow_call'
+        if: inputs.forced
         run: git pull
       - name: add git artifacts
         run: |

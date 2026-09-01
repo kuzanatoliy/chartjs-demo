@@ -22,6 +22,8 @@ import {
 } from 'chart.js';
 import { chartjsKeyboardPlugin } from '@kuzanatoliorg/chartjs-keyboard-plugin';
 
+import { chartjsLegendKeyboardPlugin } from '../plugins/chartjs-legend-keyboard-plugin';
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -42,5 +44,6 @@ ChartJS.register(
   RadarController,
   ScatterController,
   BubbleController,
-  chartjsKeyboardPlugin
+  chartjsKeyboardPlugin,
+  chartjsLegendKeyboardPlugin
 );

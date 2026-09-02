@@ -1,6 +1,7 @@
 import { Chart, type Plugin } from 'chart.js';
 import { type TChartjsLegendKeyboardPluginOptions } from './types';
 import { NavigationDirection } from './constants/navigation-direction';
+import { NavigationStrategy } from './constants/navigation-strategy';
 
 export const isOnesetChart = (type: string) =>
   type === 'doughnut' || type === 'pie' || type === 'polarArea';
@@ -33,6 +34,7 @@ const DEFAULT_OPTIONS: Required<TChartjsLegendKeyboardPluginOptions> = {
   outlineWeight: 'inherit',
   borderRadius: 'inherit',
   direction: NavigationDirection.LTR,
+  strategy: NavigationStrategy.BOTH,
 };
 
 export class ChartjsLegendKeyboardPluginEngine {
@@ -42,6 +44,7 @@ export class ChartjsLegendKeyboardPluginEngine {
   private activeElement = 0;
   private options: Required<TChartjsLegendKeyboardPluginOptions> =
     DEFAULT_OPTIONS;
+  private excludedKeys = new Set();
 
   private buildFocusHandler = (index: number) => () => {
     this.legendOptions[index].style.outline =
@@ -102,6 +105,9 @@ export class ChartjsLegendKeyboardPluginEngine {
 
   private buildKeyboardHandler = (index: number) => {
     return (event: KeyboardEvent) => {
+      if (this.excludedKeys.has(event.key)) {
+        return;
+      }
       if (NavigationKeysSet.has(event.key)) {
         event.stopPropagation();
         event.preventDefault();
@@ -204,6 +210,14 @@ export class ChartjsLegendKeyboardPluginEngine {
     };
     this.init();
     this.refreshStyles();
+    if (options.strategy === NavigationStrategy.HORIZONTAL) {
+      this.excludedKeys.add(NavigationKeys.ARROW_DOWN);
+      this.excludedKeys.add(NavigationKeys.ARROW_UP);
+    }
+    if (options.strategy === NavigationStrategy.VERTICAL) {
+      this.excludedKeys.add(NavigationKeys.ARROW_LEFT);
+      this.excludedKeys.add(NavigationKeys.ARROW_RIGHT);
+    }
     window.addEventListener('resize', this.refreshStyles);
   }
 

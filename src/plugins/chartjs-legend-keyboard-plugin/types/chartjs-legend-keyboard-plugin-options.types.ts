@@ -1,4 +1,5 @@
-import type { TNavigationDirection } from '@kuzanatoliorg/chartjs-keyboard-plugin';
+import type { TNavigationDirection } from './navigation-direaction.types';
+import type { TNavigationStrategy } from './navigation-strategy.types';
 
 export type TChartjsLegendKeyboardPluginOptions = {
   outlineColor?: string;
@@ -6,4 +7,5 @@ export type TChartjsLegendKeyboardPluginOptions = {
   outlineWeight?: string;
   borderRadius?: string;
   direction?: TNavigationDirection;
+  strategy?: TNavigationStrategy;
 };

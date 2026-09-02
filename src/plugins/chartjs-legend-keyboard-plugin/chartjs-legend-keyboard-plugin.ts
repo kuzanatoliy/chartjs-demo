@@ -1,5 +1,6 @@
 import { Chart, type Plugin } from 'chart.js';
 import { type TChartjsLegendKeyboardPluginOptions } from './types';
+import { NavigationDirection } from './constants/navigation-direction';
 
 export const isOnesetChart = (type: string) =>
   type === 'doughnut' || type === 'pie' || type === 'polarArea';
@@ -31,6 +32,7 @@ const DEFAULT_OPTIONS: Required<TChartjsLegendKeyboardPluginOptions> = {
   outlineOffset: 'inherit',
   outlineWeight: 'inherit',
   borderRadius: 'inherit',
+  direction: NavigationDirection.LTR,
 };
 
 export class ChartjsLegendKeyboardPluginEngine {
@@ -76,35 +78,54 @@ export class ChartjsLegendKeyboardPluginEngine {
     this.toggleElement(index);
   };
 
-  private buildKeyboardHandler = (ind: number) => {
+  private goNext = (index: number) => {
+    this.legendOptions[index].setAttribute('tabindex', '-1');
+    index--;
+    if (index < 0) {
+      index = this.legendOptions.length - 1;
+    }
+    this.legendOptions[index].setAttribute('tabindex', '0');
+    this.legendOptions[index].focus();
+    this.activeElement = index;
+  };
+
+  private goPrevious = (index: number) => {
+    this.legendOptions[index].setAttribute('tabindex', '-1');
+    index++;
+    if (index === this.legendOptions.length) {
+      index = 0;
+    }
+    this.legendOptions[index].setAttribute('tabindex', '0');
+    this.legendOptions[index].focus();
+    this.activeElement = index;
+  };
+
+  private buildKeyboardHandler = (index: number) => {
     return (event: KeyboardEvent) => {
-      let index = ind;
       if (NavigationKeysSet.has(event.key)) {
         event.stopPropagation();
         event.preventDefault();
       }
       switch (event.key) {
         case NavigationKeys.ARROW_LEFT:
-        case NavigationKeys.ARROW_UP:
-          this.legendOptions[index].setAttribute('tabindex', '-1');
-          index--;
-          if (index < 0) {
-            index = this.legendOptions.length - 1;
+          if (this.options.direction === NavigationDirection.LTR) {
+            this.goPrevious(index);
+          } else {
+            this.goNext(index);
           }
-          this.legendOptions[index].setAttribute('tabindex', '0');
-          this.legendOptions[index].focus();
-          this.activeElement = index;
+          break;
+        case NavigationKeys.ARROW_UP:
+          this.goPrevious(index);
           break;
         case NavigationKeys.ARROW_RIGHT:
-        case NavigationKeys.ARROW_DOWN:
-          this.legendOptions[index].setAttribute('tabindex', '-1');
-          index++;
-          if (index === this.legendOptions.length) {
-            index = 0;
+          if (this.options.direction === NavigationDirection.LTR) {
+            this.goNext(index);
+          } else {
+            this.goPrevious(index);
           }
-          this.legendOptions[index].setAttribute('tabindex', '0');
-          this.legendOptions[index].focus();
-          this.activeElement = index;
+          break;
+        case NavigationKeys.ARROW_DOWN:
+          this.goNext(index);
           break;
         case NavigationKeys.HOME:
           this.legendOptions[index].setAttribute('tabindex', '-1');

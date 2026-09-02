@@ -80,7 +80,7 @@ export class ChartjsLegendKeyboardPluginEngine {
     this.toggleElement(index);
   };
 
-  private goNext = (index: number) => {
+  private goPrevious = (index: number) => {
     this.legendOptions[index].setAttribute('tabindex', '-1');
     index--;
     if (index < 0) {
@@ -91,7 +91,7 @@ export class ChartjsLegendKeyboardPluginEngine {
     this.activeElement = index;
   };
 
-  private goPrevious = (index: number) => {
+  private goNext = (index: number) => {
     this.legendOptions[index].setAttribute('tabindex', '-1');
     index++;
     if (index === this.legendOptions.length) {

@@ -1,3 +1,6 @@
 export type TChartjsLegendKeyboardPluginOptions = {
-  temp?: string;
+  outlineColor?: string;
+  outlineOffset?: string;
+  outlineWeight?: string;
+  borderRadius?: string;
 };

@@ -46,6 +46,12 @@ export const ChartWrapper = <
           strategy,
           direction,
         },
+        chartjsLegendKeyboardPlugin: {
+          outlineColor: 'var(--prime-color-main)',
+          outlineOffset: 'var(--size-half)',
+          borderRadius: 'var(--size-quater)',
+          outlineWeight: '1px',
+        },
       },
       scales: {
         ...props.options.scales,

@@ -41,6 +41,15 @@ export class ChartjsLegendKeyboardPluginEngine {
   private options: Required<TChartjsLegendKeyboardPluginOptions> =
     DEFAULT_OPTIONS;
 
+  private buildFocusHandler = (index: number) => () => {
+    this.legendOptions[index].style.outline =
+      `solid ${this.options.outlineWeight} ${this.options.outlineColor}`;
+  };
+
+  private buildBlurHandler = (index: number) => () => {
+    this.legendOptions[index].style.outline = '';
+  };
+
   private toggleElement = (index: number) => {
     let isSelected;
     if (isOnesetChart(this.chart.getSortedVisibleDatasetMetas()[0].type)) {
@@ -128,6 +137,8 @@ export class ChartjsLegendKeyboardPluginEngine {
       this.legendOptions.push(option);
       option.addEventListener('click', this.buildClickHandler(ind));
       option.addEventListener('keydown', this.buildKeyboardHandler(ind));
+      option.addEventListener('focus', this.buildFocusHandler(ind));
+      option.addEventListener('blur', this.buildBlurHandler(ind));
       option.setAttribute('aria-label', item.text);
       option.setAttribute(
         'tabindex',
@@ -136,7 +147,6 @@ export class ChartjsLegendKeyboardPluginEngine {
       option.style.position = 'absolute';
       option.style.outlineOffset = this.options.outlineOffset;
       option.style.borderRadius = this.options.borderRadius;
-      option.style.outlineColor = this.options.outlineColor;
       this.legendContainer.append(option);
     });
     this.chart.canvas.insertAdjacentElement('afterend', this.legendContainer);

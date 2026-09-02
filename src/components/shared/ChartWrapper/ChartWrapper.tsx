@@ -49,8 +49,8 @@ export const ChartWrapper = <
         chartjsLegendKeyboardPlugin: {
           outlineColor: 'var(--prime-color-main)',
           outlineOffset: 'var(--size-half)',
-          borderRadius: 'var(--size-quater)',
-          outlineWeight: '1px',
+          borderRadius: 'var(--size-one-eight)',
+          outlineWeight: '2px',
         },
       },
       scales: {

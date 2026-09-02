@@ -34,6 +34,7 @@ const DEFAULT_OPTIONS: Required<TChartjsLegendKeyboardPluginOptions> = {
   borderRadius: 'inherit',
   direction: NavigationDirection.LTR,
   strategy: NavigationStrategy.BOTH,
+  label: 'Chart Legend',
 };
 
 export class ChartjsLegendKeyboardPluginEngine {
@@ -55,20 +56,20 @@ export class ChartjsLegendKeyboardPluginEngine {
   };
 
   private toggleElement = (index: number) => {
-    let isSelected;
-    if (isOnesetChart(this.chart.getSortedVisibleDatasetMetas()[0].type)) {
+    let isPressed;
+    if (isOnesetChart(this.chart.getDatasetMeta(0).type)) {
       this.chart.toggleDataVisibility(index);
-      isSelected = this.chart.getDataVisibility(index);
+      isPressed = this.chart.getDataVisibility(index);
     } else if (this.chart.isDatasetVisible(index)) {
-      isSelected = false;
+      isPressed = false;
       this.chart.hide(index);
     } else {
-      isSelected = true;
+      isPressed = true;
       this.chart.show(index);
     }
     this.legendOptions[index].setAttribute(
-      'aria-selected',
-      isSelected.toString()
+      'aria-pressed',
+      isPressed.toString()
     );
     this.chart.update();
   };
@@ -158,7 +159,9 @@ export class ChartjsLegendKeyboardPluginEngine {
 
   private init = () => {
     this.legendContainer.style.position = 'absolute';
-    this.chart.legend?.legendItems?.map((item, ind) => {
+    this.legendContainer.setAttribute('role', 'region');
+    this.legendContainer.setAttribute('aria-label', this.options.label);
+    this.chart.legend?.legendItems?.map((item, ind, array) => {
       const option = document.createElement('div');
       this.legendOptions.push(option);
       option.addEventListener('click', this.buildClickHandler(ind));
@@ -166,6 +169,10 @@ export class ChartjsLegendKeyboardPluginEngine {
       option.addEventListener('focus', this.buildFocusHandler(ind));
       option.addEventListener('blur', this.buildBlurHandler(ind));
       option.setAttribute('aria-label', item.text);
+      option.setAttribute('aria-pressed', 'true');
+      option.setAttribute('role', 'button');
+      option.setAttribute('aria-setsize', array.length.toString());
+      option.setAttribute('aria-posinset', (ind + 1).toString());
       option.setAttribute(
         'tabindex',
         (this.activeElement === ind ? 0 : -1).toString()

@@ -8,4 +8,5 @@ export type TChartjsLegendKeyboardPluginOptions = {
   borderRadius?: string;
   direction?: TNavigationDirection;
   strategy?: TNavigationStrategy;
+  label?: string;
 };

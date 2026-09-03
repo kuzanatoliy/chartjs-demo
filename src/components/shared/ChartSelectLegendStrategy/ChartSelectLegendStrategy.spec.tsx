@@ -5,16 +5,16 @@ import { beforeEach, describe, expect, it, vitest } from 'vitest';
 import {
   type TMockUseChartContext,
   mockUseChartContext,
-  onChangeStrategySpy,
+  onChangeLegendStrategySpy,
 } from '../ChartProvider/test-utils/use-chart-context';
-import { ChartSelectStrategy } from './ChartSelectStrategy';
-import { NavigationStrategy } from '@kuzanatoliorg/chartjs-keyboard-plugin';
+import { ChartSelectLegendStrategy } from './ChartSelectLegendStrategy';
+import { NavigationStrategy as LegendNavigationStrategy } from '../../../plugins/chartjs-legend-keyboard-plugin/constants';
 import { useChartContext } from '../ChartProvider';
 
-describe('ChartSelectStrategy', () => {
+describe('ChartSelectLegendStrategy', () => {
   const renderComponent = (props: TMockUseChartContext = {}) => {
     mockUseChartContext(props);
-    return render(<ChartSelectStrategy />);
+    return render(<ChartSelectLegendStrategy />);
   };
 
   beforeEach(() => {
@@ -22,19 +22,23 @@ describe('ChartSelectStrategy', () => {
   });
 
   it('Should render component', () => {
-    renderComponent({ strategy: NavigationStrategy.DATA });
+    renderComponent({ legendStrategy: LegendNavigationStrategy.HORIZONTAL });
     expect(useChartContext).toHaveBeenCalled();
     expect(screen.getByRole('combobox')).toBeDefined();
-    expect(screen.getByRole('combobox')).toHaveValue(NavigationStrategy.DATA);
+    expect(screen.getByRole('combobox')).toHaveValue(
+      LegendNavigationStrategy.HORIZONTAL
+    );
   });
 
-  it('Should change strategy', async () => {
+  it('Should change legend strategy', async () => {
     renderComponent();
-    expect(onChangeStrategySpy).not.toHaveBeenCalled();
+    expect(onChangeLegendStrategySpy).not.toHaveBeenCalled();
     await userEvent.selectOptions(
       screen.getByRole('combobox'),
-      NavigationStrategy.DATA
+      LegendNavigationStrategy.HORIZONTAL
     );
-    expect(onChangeStrategySpy).toHaveBeenCalledWith(NavigationStrategy.DATA);
+    expect(onChangeLegendStrategySpy).toHaveBeenCalledWith(
+      LegendNavigationStrategy.HORIZONTAL
+    );
   });
 });

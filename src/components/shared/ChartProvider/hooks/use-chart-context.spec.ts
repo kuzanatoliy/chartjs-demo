@@ -6,6 +6,7 @@ import {
   NavigationDirection,
   NavigationStrategy,
 } from '@kuzanatoliorg/chartjs-keyboard-plugin';
+import { NavigationStrategy as LegendNavigationStrategy } from '../../../../plugins/chartjs-legend-keyboard-plugin/constants';
 
 describe('use-chart-context', () => {
   const renderHook = () => render(useChartContext);
@@ -14,6 +15,9 @@ describe('use-chart-context', () => {
     const { result } = renderHook();
     expect(result.current.strategy).toBe(DEFAULT_CHART_CONTEXT.strategy);
     expect(result.current.direction).toBe(DEFAULT_CHART_CONTEXT.direction);
+    expect(result.current.legendStrategy).toBe(
+      DEFAULT_CHART_CONTEXT.legendStrategy
+    );
   });
 
   it('Should call defoult onChangeStrategy', () => {
@@ -36,6 +40,20 @@ describe('use-chart-context', () => {
     } catch (error) {
       expect((error as Error).message).toBe(
         'onChangeDirection in not available'
+      );
+    }
+  });
+
+  it('Should call default onChangeLegendStrategy', () => {
+    const { result } = renderHook();
+    try {
+      result.current.onChangeLegendStrategy(
+        LegendNavigationStrategy.HORIZONTAL
+      );
+      throw new Error('Not call default handler');
+    } catch (error) {
+      expect((error as Error).message).toBe(
+        'onChangeLegendStrategy in not available'
       );
     }
   });

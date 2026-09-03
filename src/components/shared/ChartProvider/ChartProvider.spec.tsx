@@ -3,6 +3,7 @@ import { beforeEach, describe, expect, it, vitest } from 'vitest';
 
 import { ChartProvider, type TChartProviderProps } from './ChartProvider';
 import { NavigationStrategy } from '@kuzanatoliorg/chartjs-keyboard-plugin';
+import { NavigationStrategy as LegendNavigationStrategy } from '../../../plugins/chartjs-legend-keyboard-plugin/constants';
 
 import { useChartState } from './hooks';
 
@@ -40,6 +41,17 @@ describe('ChartProvider', () => {
     expect(useChartState).toHaveBeenCalledWith(
       expect.objectContaining({
         'init-strategy': NavigationStrategy.DATASET_FIRST,
+      })
+    );
+  });
+
+  it('Should render component with init legend strategy', () => {
+    renderComponent({
+      'init-legend-strategy': LegendNavigationStrategy.HORIZONTAL,
+    });
+    expect(useChartState).toHaveBeenCalledWith(
+      expect.objectContaining({
+        'init-legend-strategy': LegendNavigationStrategy.HORIZONTAL,
       })
     );
   });

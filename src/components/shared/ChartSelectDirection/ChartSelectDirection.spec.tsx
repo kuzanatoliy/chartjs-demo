@@ -1,41 +1,19 @@
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vitest } from 'vitest';
-import {
-  NavigationDirection,
-  NavigationStrategy,
-} from '@kuzanatoliorg/chartjs-keyboard-plugin';
+import { NavigationDirection } from '@kuzanatoliorg/chartjs-keyboard-plugin';
 
+import {
+  type TMockUseChartContext,
+  mockUseChartContext,
+  onChangeDirectionSpy,
+} from '../ChartProvider/test-utils/use-chart-context';
 import { ChartSelectDirection } from './ChartSelectDirection';
 import { useChartContext } from '../ChartProvider';
 
-vitest.mock('../ChartProvider', async () => {
-  const origin =
-    await vitest.importActual<typeof import('../ChartProvider')>(
-      '../ChartProvider'
-    );
-  return {
-    ...origin,
-    useChartContext: vitest.fn(),
-  };
-});
-
 describe('ChartSelectDirection', () => {
-  const onChangeDirectionSpy = vitest.fn();
-
-  const DEFAULT_PROPS: ReturnType<typeof useChartContext> = {
-    strategy: NavigationStrategy.BALANCE,
-    direction: NavigationDirection.LTR,
-    onChangeStrategy: vitest.fn(),
-    onChangeDirection: onChangeDirectionSpy,
-  };
-
-  const renderComponent = (
-    props: Partial<ReturnType<typeof useChartContext>> = {}
-  ) => {
-    vitest
-      .mocked(useChartContext)
-      .mockReturnValue({ ...DEFAULT_PROPS, ...props });
+  const renderComponent = (props: TMockUseChartContext = {}) => {
+    mockUseChartContext(props);
     return render(<ChartSelectDirection />);
   };
 
@@ -51,7 +29,8 @@ describe('ChartSelectDirection', () => {
   });
 
   it('Should change direction', async () => {
-    renderComponent({ onChangeDirection: onChangeDirectionSpy });
+    renderComponent();
+    expect(onChangeDirectionSpy).not.toHaveBeenCalled();
     await userEvent.selectOptions(
       screen.getByRole('combobox'),
       NavigationDirection.RTL

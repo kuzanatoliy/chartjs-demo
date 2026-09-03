@@ -1,0 +1,12 @@
+.chartselectlegendstrategy-selector {
+  border-radius: var(--size-half);
+  background: inherit;
+
+  &:focus {
+    outline: solid 1px var(--prime-color-main);
+  }
+}
+
+.chartselectlegendstrategy-option {
+  background: var(--third-color);
+}

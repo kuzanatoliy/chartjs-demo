@@ -20,7 +20,7 @@ export const ChartWrapper = <
 >(
   props: TChartWrapperProps<TOptions, TData>
 ) => {
-  const { strategy, direction } = useChartContext();
+  const { strategy, direction, legendStrategy } = useChartContext();
 
   const localOptions = useMemo(() => {
     const isRtl = direction === NavigationDirection.RTL;
@@ -51,6 +51,8 @@ export const ChartWrapper = <
           outlineOffset: 'var(--size-half)',
           borderRadius: 'var(--size-one-eight)',
           outlineWeight: '2px',
+          strategy: legendStrategy,
+          direction,
         },
       },
       scales: {
@@ -65,12 +67,12 @@ export const ChartWrapper = <
         },
       },
     };
-  }, [props.options, strategy, direction]);
+  }, [props.options, strategy, direction, legendStrategy]);
 
   return (
     <Chart
       {...props}
-      key={`${strategy}|${direction}`}
+      key={`${strategy}|${direction}|${legendStrategy}`}
       options={localOptions}
       role='img'
       aria-label={localOptions.plugins?.title?.text?.toString()}

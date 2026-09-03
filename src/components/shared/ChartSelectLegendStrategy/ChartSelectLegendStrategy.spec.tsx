@@ -2,10 +2,10 @@ import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vitest } from 'vitest';
 
-import { ChartSelectStrategy } from './ChartSelectStrategy';
+import { ChartSelectLegendStrategy } from './ChartSelectLegendStrategy';
 import {
-  NavigationStrategy,
   NavigationDirection,
+  NavigationStrategy,
 } from '@kuzanatoliorg/chartjs-keyboard-plugin';
 import { NavigationStrategy as LegendNavigationStrategy } from '../../../plugins/chartjs-legend-keyboard-plugin/constants';
 import { useChartContext } from '../ChartProvider';
@@ -21,16 +21,16 @@ vitest.mock('../ChartProvider', async () => {
   };
 });
 
-describe('ChartSelectStrategy', () => {
-  const onChangeStrategySpy = vitest.fn();
+describe('ChartSelectLegendStrategy', () => {
+  const onChangeLegendStrategySpy = vitest.fn();
 
   const DEFAULT_PROPS: ReturnType<typeof useChartContext> = {
     strategy: NavigationStrategy.BALANCE,
     direction: NavigationDirection.LTR,
     legendStrategy: LegendNavigationStrategy.BOTH,
-    onChangeStrategy: onChangeStrategySpy,
+    onChangeStrategy: vitest.fn(),
     onChangeDirection: vitest.fn(),
-    onChangeLegendStrategy: vitest.fn(),
+    onChangeLegendStrategy: onChangeLegendStrategySpy,
   };
 
   const renderComponent = (
@@ -39,7 +39,7 @@ describe('ChartSelectStrategy', () => {
     vitest
       .mocked(useChartContext)
       .mockReturnValue({ ...DEFAULT_PROPS, ...props });
-    return render(<ChartSelectStrategy />);
+    return render(<ChartSelectLegendStrategy />);
   };
 
   beforeEach(() => {
@@ -47,18 +47,22 @@ describe('ChartSelectStrategy', () => {
   });
 
   it('Should render component', () => {
-    renderComponent({ strategy: NavigationStrategy.DATA });
+    renderComponent({ legendStrategy: LegendNavigationStrategy.HORIZONTAL });
     expect(useChartContext).toHaveBeenCalled();
     expect(screen.getByRole('combobox')).toBeDefined();
-    expect(screen.getByRole('combobox')).toHaveValue(NavigationStrategy.DATA);
+    expect(screen.getByRole('combobox')).toHaveValue(
+      LegendNavigationStrategy.HORIZONTAL
+    );
   });
 
-  it('Should change strategy', async () => {
-    renderComponent({ onChangeStrategy: onChangeStrategySpy });
+  it('Should change legend strategy', async () => {
+    renderComponent({ onChangeLegendStrategy: onChangeLegendStrategySpy });
     await userEvent.selectOptions(
       screen.getByRole('combobox'),
-      NavigationStrategy.DATA
+      LegendNavigationStrategy.HORIZONTAL
     );
-    expect(onChangeStrategySpy).toHaveBeenCalledWith(NavigationStrategy.DATA);
+    expect(onChangeLegendStrategySpy).toHaveBeenCalledWith(
+      LegendNavigationStrategy.HORIZONTAL
+    );
   });
 });

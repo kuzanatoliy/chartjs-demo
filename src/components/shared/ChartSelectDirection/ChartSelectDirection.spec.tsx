@@ -5,6 +5,7 @@ import {
   NavigationDirection,
   NavigationStrategy,
 } from '@kuzanatoliorg/chartjs-keyboard-plugin';
+import { NavigationStrategy as LegendNavigationStrategy } from '../../../plugins/chartjs-legend-keyboard-plugin/constants';
 
 import { ChartSelectDirection } from './ChartSelectDirection';
 import { useChartContext } from '../ChartProvider';
@@ -26,8 +27,10 @@ describe('ChartSelectDirection', () => {
   const DEFAULT_PROPS: ReturnType<typeof useChartContext> = {
     strategy: NavigationStrategy.BALANCE,
     direction: NavigationDirection.LTR,
+    legendStrategy: LegendNavigationStrategy.BOTH,
     onChangeStrategy: vitest.fn(),
     onChangeDirection: onChangeDirectionSpy,
+    onChangeLegendStrategy: vitest.fn(),
   };
 
   const renderComponent = (

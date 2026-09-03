@@ -2,43 +2,18 @@ import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vitest } from 'vitest';
 
-import { ChartSelectStrategy } from './ChartSelectStrategy';
 import {
-  NavigationStrategy,
-  NavigationDirection,
-} from '@kuzanatoliorg/chartjs-keyboard-plugin';
-import { NavigationStrategy as LegendNavigationStrategy } from '../../../plugins/chartjs-legend-keyboard-plugin/constants';
+  type TMockUseChartContext,
+  mockUseChartContext,
+  onChangeStrategySpy,
+} from '../ChartProvider/test-utils/use-chart-context';
+import { ChartSelectStrategy } from './ChartSelectStrategy';
+import { NavigationStrategy } from '@kuzanatoliorg/chartjs-keyboard-plugin';
 import { useChartContext } from '../ChartProvider';
 
-vitest.mock('../ChartProvider', async () => {
-  const origin =
-    await vitest.importActual<typeof import('../ChartProvider')>(
-      '../ChartProvider'
-    );
-  return {
-    ...origin,
-    useChartContext: vitest.fn(),
-  };
-});
-
 describe('ChartSelectStrategy', () => {
-  const onChangeStrategySpy = vitest.fn();
-
-  const DEFAULT_PROPS: ReturnType<typeof useChartContext> = {
-    strategy: NavigationStrategy.BALANCE,
-    direction: NavigationDirection.LTR,
-    legendStrategy: LegendNavigationStrategy.BOTH,
-    onChangeStrategy: onChangeStrategySpy,
-    onChangeDirection: vitest.fn(),
-    onChangeLegendStrategy: vitest.fn(),
-  };
-
-  const renderComponent = (
-    props: Partial<ReturnType<typeof useChartContext>> = {}
-  ) => {
-    vitest
-      .mocked(useChartContext)
-      .mockReturnValue({ ...DEFAULT_PROPS, ...props });
+  const renderComponent = (props: TMockUseChartContext = {}) => {
+    mockUseChartContext(props);
     return render(<ChartSelectStrategy />);
   };
 
@@ -54,7 +29,8 @@ describe('ChartSelectStrategy', () => {
   });
 
   it('Should change strategy', async () => {
-    renderComponent({ onChangeStrategy: onChangeStrategySpy });
+    renderComponent();
+    expect(onChangeStrategySpy).not.toHaveBeenCalled();
     await userEvent.selectOptions(
       screen.getByRole('combobox'),
       NavigationStrategy.DATA

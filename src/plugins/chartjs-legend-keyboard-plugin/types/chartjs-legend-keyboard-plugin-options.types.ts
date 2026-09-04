@@ -9,4 +9,5 @@ export type TChartjsLegendKeyboardPluginOptions = {
   direction?: TNavigationDirection;
   strategy?: TNavigationStrategy;
   label?: string;
+  itemLabelPattern?: string;
 };

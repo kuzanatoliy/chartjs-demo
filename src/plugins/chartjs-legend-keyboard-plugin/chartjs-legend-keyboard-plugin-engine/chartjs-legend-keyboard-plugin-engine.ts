@@ -1,21 +1,7 @@
 import { Chart } from 'chart.js';
 import { type TChartjsLegendKeyboardPluginOptions } from '../types';
 import { NavigationDirection, NavigationStrategy } from '../constants';
-
-export const isOnesetChart = (type: string) =>
-  type === 'doughnut' || type === 'pie' || type === 'polarArea';
-
-export const buildItemLabel = (
-  pattern: string,
-  title: string,
-  index: number,
-  count: number
-) => {
-  return pattern
-    .replaceAll('{title}', title)
-    .replaceAll('{index}', `${index}`)
-    .replaceAll('{count}', `${count}`);
-};
+import { buildItemLabel, isOnesetChart } from '../helpers';
 
 const NavigationKeys = {
   ARROW_LEFT: 'ArrowLeft',
@@ -84,33 +70,32 @@ export class ChartjsLegendKeyboardPluginEngine {
     this.chart.update();
   };
 
+  private changeActiveElement = (prev: number, next: number) => {
+    this.legendOptions[prev].setAttribute('tabindex', '-1');
+    this.legendOptions[next].setAttribute('tabindex', '0');
+    this.legendOptions[next].focus();
+    this.activeElement = next;
+  };
+
   private buildClickHandler = (index: number) => () => {
-    this.legendOptions[this.activeElement].setAttribute('tabindex', '-1');
-    this.activeElement = index;
-    this.legendOptions[this.activeElement].setAttribute('tabindex', '0');
+    this.changeActiveElement(this.activeElement, index);
     this.toggleElement(index);
   };
 
   private goPrevious = (index: number) => {
-    this.legendOptions[index].setAttribute('tabindex', '-1');
-    index--;
-    if (index < 0) {
-      index = this.legendOptions.length - 1;
+    let next = index - 1;
+    if (next < 0) {
+      next = this.legendOptions.length - 1;
     }
-    this.legendOptions[index].setAttribute('tabindex', '0');
-    this.legendOptions[index].focus();
-    this.activeElement = index;
+    this.changeActiveElement(index, next);
   };
 
   private goNext = (index: number) => {
-    this.legendOptions[index].setAttribute('tabindex', '-1');
-    index++;
-    if (index === this.legendOptions.length) {
-      index = 0;
+    let next = index + 1;
+    if (next === this.legendOptions.length) {
+      next = 0;
     }
-    this.legendOptions[index].setAttribute('tabindex', '0');
-    this.legendOptions[index].focus();
-    this.activeElement = index;
+    this.changeActiveElement(index, next);
   };
 
   private buildKeyboardHandler = (index: number) => {
@@ -144,19 +129,10 @@ export class ChartjsLegendKeyboardPluginEngine {
           this.goNext(index);
           break;
         case NavigationKeys.HOME:
-          this.legendOptions[index].setAttribute('tabindex', '-1');
-          this.legendOptions[0].setAttribute('tabindex', '0');
-          this.legendOptions[0].focus();
-          this.activeElement = 0;
+          this.changeActiveElement(index, 0);
           break;
         case NavigationKeys.END:
-          this.legendOptions[index].setAttribute('tabindex', '-1');
-          this.legendOptions[this.legendOptions.length - 1].setAttribute(
-            'tabindex',
-            '0'
-          );
-          this.legendOptions[this.legendOptions.length - 1].focus();
-          this.activeElement = this.legendOptions.length - 1;
+          this.changeActiveElement(index, this.legendOptions.length - 1);
           break;
         case NavigationKeys.ENTER:
         case NavigationKeys.SPACE:
@@ -210,10 +186,6 @@ export class ChartjsLegendKeyboardPluginEngine {
       width: lwidth = 0,
       height: lheight = 0,
     } = this.chart.legend || {};
-    console.log(
-      this.chart.canvas.offsetParent,
-      this.chart.canvas.offsetParent?.getBoundingClientRect()
-    );
     this.legendContainer.style.top = `${rect.top + window.scrollY + ltop - offsetRect.y}px`;
     this.legendContainer.style.left = `${rect.left + window.scrollX + lleft - offsetRect.x}px`;
     this.legendContainer.style.width = `${lwidth}px`;

@@ -4,7 +4,7 @@ import {
   NavigationDirection,
   NavigationStrategy,
 } from '@kuzanatoliorg/chartjs-keyboard-plugin';
-import { NavigationStrategy as LegendNavigationStrategy } from '../../../../plugins/chartjs-legend-keyboard-plugin/constants';
+import { NavigationStrategy as LegendNavigationStrategy } from '@kuzanatoliorg/chartjs-legend-keyboard-plugin';
 
 export type TUseChartStateProps = {
   ['init-strategy']?: TChartState['strategy'];

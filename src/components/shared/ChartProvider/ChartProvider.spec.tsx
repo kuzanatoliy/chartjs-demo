@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { NavigationStrategy } from '@kuzanatoliorg/chartjs-keyboard-plugin';
+import { NavigationStrategy as LegendNavigationStrategy } from '@kuzanatoliorg/chartjs-legend-keyboard-plugin';
 
 import { ChartProvider, type TChartProviderProps } from './ChartProvider';
-import { NavigationStrategy } from '@kuzanatoliorg/chartjs-keyboard-plugin';
-import { NavigationStrategy as LegendNavigationStrategy } from '../../../plugins/chartjs-legend-keyboard-plugin/constants';
 
 import { useChartState } from './hooks';
 

@@ -1,6 +1,8 @@
 import { useCallback, useId, type ChangeEvent } from 'react';
-import { NavigationStrategy as LegendNavigationStrategy } from '../../../plugins/chartjs-legend-keyboard-plugin/constants';
-import type { TNavigationStrategy as TLegendNavigationStrategy } from '../../../plugins/chartjs-legend-keyboard-plugin/types';
+import {
+  NavigationStrategy as LegendNavigationStrategy,
+  type TNavigationStrategy as TLegendNavigationStrategy,
+} from '@kuzanatoliorg/chartjs-legend-keyboard-plugin';
 
 import { useChartContext } from '../ChartProvider';
 import styles from './ChartSelectLegendStrategy.module.scss';

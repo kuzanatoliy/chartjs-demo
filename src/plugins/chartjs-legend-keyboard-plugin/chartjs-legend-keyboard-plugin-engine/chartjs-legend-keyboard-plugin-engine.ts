@@ -187,14 +187,20 @@ export class ChartjsLegendKeyboardPluginEngine {
 
   private refreshStyles = () => {
     const rect = this.chart.canvas.getBoundingClientRect();
+    const offsetRect =
+      this.chart.canvas.offsetParent?.getBoundingClientRect() || { x: 0, y: 0 };
     const {
       top: ltop = 0,
       left: lleft = 0,
       width: lwidth = 0,
       height: lheight = 0,
     } = this.chart.legend || {};
-    this.legendContainer.style.top = `${rect.top + window.scrollY + ltop}px`;
-    this.legendContainer.style.left = `${rect.left + window.scrollX + lleft}px`;
+    console.log(
+      this.chart.canvas.offsetParent,
+      this.chart.canvas.offsetParent?.getBoundingClientRect()
+    );
+    this.legendContainer.style.top = `${rect.top + window.scrollY + ltop - offsetRect.y}px`;
+    this.legendContainer.style.left = `${rect.left + window.scrollX + lleft - offsetRect.x}px`;
     this.legendContainer.style.width = `${lwidth}px`;
     this.legendContainer.style.height = `${lheight}px`;
     this.legendOptions.forEach((item, ind) => {

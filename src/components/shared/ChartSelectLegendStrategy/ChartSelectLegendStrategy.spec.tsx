@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { beforeEach, describe, expect, it, vitest } from 'vitest';
+import { NavigationStrategy as LegendNavigationStrategy } from '@kuzanatoliorg/chartjs-legend-keyboard-plugin';
 
 import {
   type TMockUseChartContext,
@@ -8,7 +9,6 @@ import {
   onChangeLegendStrategySpy,
 } from '../ChartProvider/test-utils/use-chart-context';
 import { ChartSelectLegendStrategy } from './ChartSelectLegendStrategy';
-import { NavigationStrategy as LegendNavigationStrategy } from '../../../plugins/chartjs-legend-keyboard-plugin/constants';
 import { useChartContext } from '../ChartProvider';
 
 describe('ChartSelectLegendStrategy', () => {

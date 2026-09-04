@@ -3,7 +3,8 @@ import {
   NavigationDirection,
   NavigationStrategy,
 } from '@kuzanatoliorg/chartjs-keyboard-plugin';
-import { NavigationStrategy as LegendNavigationStrategy } from '../../../plugins/chartjs-legend-keyboard-plugin/constants';
+import { NavigationStrategy as LegendNavigationStrategy } from '@kuzanatoliorg/chartjs-legend-keyboard-plugin';
+
 import type { TChartContext } from './types';
 
 export const DEFAULT_CHART_CONTEXT: TChartContext = {

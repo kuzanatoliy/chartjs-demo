@@ -21,8 +21,7 @@ import {
   BubbleController,
 } from 'chart.js';
 import { chartjsKeyboardPlugin } from '@kuzanatoliorg/chartjs-keyboard-plugin';
-
-import { chartjsLegendKeyboardPlugin } from '../plugins/chartjs-legend-keyboard-plugin';
+import { chartjsLegendKeyboardPlugin } from '@kuzanatoliorg/chartjs-legend-keyboard-plugin';
 
 ChartJS.register(
   CategoryScale,

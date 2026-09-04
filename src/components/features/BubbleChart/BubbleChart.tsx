@@ -1,5 +1,5 @@
 import { NavigationStrategy } from '@kuzanatoliorg/chartjs-keyboard-plugin';
-import { NavigationStrategy as LegendNavigationStrategy } from '../../../plugins/chartjs-legend-keyboard-plugin';
+import { NavigationStrategy as LegendNavigationStrategy } from '@kuzanatoliorg/chartjs-legend-keyboard-plugin';
 import {
   Card,
   ChartContainer,

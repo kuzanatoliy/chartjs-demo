@@ -5,6 +5,18 @@ import { NavigationDirection, NavigationStrategy } from '../constants';
 export const isOnesetChart = (type: string) =>
   type === 'doughnut' || type === 'pie' || type === 'polarArea';
 
+export const buildItemLabel = (
+  pattern: string,
+  title: string,
+  index: number,
+  count: number
+) => {
+  return pattern
+    .replaceAll('{title}', title)
+    .replaceAll('{index}', `${index}`)
+    .replaceAll('{count}', `${count}`);
+};
+
 const NavigationKeys = {
   ARROW_LEFT: 'ArrowLeft',
   ARROW_UP: 'ArrowUp',
@@ -35,6 +47,7 @@ const DEFAULT_OPTIONS: Required<TChartjsLegendKeyboardPluginOptions> = {
   direction: NavigationDirection.LTR,
   strategy: NavigationStrategy.BOTH,
   label: 'Chart Legend',
+  itemLabelPattern: '{title}, {index} of {count}',
 };
 
 export class ChartjsLegendKeyboardPluginEngine {
@@ -67,10 +80,7 @@ export class ChartjsLegendKeyboardPluginEngine {
       isPressed = true;
       this.chart.show(index);
     }
-    this.legendOptions[index].setAttribute(
-      'aria-pressed',
-      isPressed.toString()
-    );
+    this.legendOptions[index].setAttribute('aria-pressed', `${isPressed}`);
     this.chart.update();
   };
 
@@ -168,15 +178,20 @@ export class ChartjsLegendKeyboardPluginEngine {
       option.addEventListener('keydown', this.buildKeyboardHandler(ind));
       option.addEventListener('focus', this.buildFocusHandler(ind));
       option.addEventListener('blur', this.buildBlurHandler(ind));
-      option.setAttribute('aria-label', item.text);
+      option.setAttribute(
+        'aria-label',
+        buildItemLabel(
+          this.options.itemLabelPattern,
+          item.text,
+          ind + 1,
+          array.length
+        )
+      );
       option.setAttribute('aria-pressed', 'true');
       option.setAttribute('role', 'button');
-      option.setAttribute('aria-setsize', array.length.toString());
-      option.setAttribute('aria-posinset', (ind + 1).toString());
-      option.setAttribute(
-        'tabindex',
-        (this.activeElement === ind ? 0 : -1).toString()
-      );
+      option.setAttribute('aria-setsize', `${array.length}`);
+      option.setAttribute('aria-posinset', `${ind + 1}`);
+      option.setAttribute('tabindex', `${this.activeElement === ind ? 0 : -1}`);
       option.style.position = 'absolute';
       option.style.outlineOffset = this.options.outlineOffset;
       option.style.borderRadius = this.options.borderRadius;

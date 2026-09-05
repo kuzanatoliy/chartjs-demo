@@ -4,6 +4,7 @@
   position: sticky;
   top: 0;
   box-shadow: 0 var(--size-double) var(--size-double) var(--third-color);
+  z-index: 100;
 }
 
 .header-title {

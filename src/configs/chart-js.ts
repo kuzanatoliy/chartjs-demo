@@ -22,6 +22,7 @@ import {
 } from 'chart.js';
 import { chartjsKeyboardPlugin } from '@kuzanatoliorg/chartjs-keyboard-plugin';
 import { chartjsLegendKeyboardPlugin } from '@kuzanatoliorg/chartjs-legend-keyboard-plugin';
+import { chartjsTooltipPronunciationPlugin } from '../plugins/chartjs-tooltip-pronunciation';
 
 ChartJS.register(
   CategoryScale,
@@ -44,5 +45,6 @@ ChartJS.register(
   ScatterController,
   BubbleController,
   chartjsKeyboardPlugin,
-  chartjsLegendKeyboardPlugin
+  chartjsLegendKeyboardPlugin,
+  chartjsTooltipPronunciationPlugin
 );

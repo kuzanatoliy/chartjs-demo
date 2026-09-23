@@ -1,6 +1,7 @@
 import { ChartType } from 'chart.js';
 import { type TChartjsKeyboardPluginOptions } from '@kuzanatoliorg/chartjs-keyboard-plugin';
 import { type TChartjsLegendKeyboardPluginOptions } from './src/plugins/chartjs-legend-keyboard-plugin';
+import { type TChartjsTooltipPronunciationPluginOptions } from './src/plugins/chartjs-tooltip-pronunciation';
 
 // Define the shape of your plugin's configuration options
 export interface MyCustomPluginOptions {
@@ -15,5 +16,6 @@ declare module 'chart.js' {
   interface PluginOptionsByType<TType extends ChartType> {
     chartjsKeyboardPlugin?: TChartjsKeyboardPluginOptions;
     chartjsLegendKeyboardPlugin?: TChartjsLegendKeyboardPluginOptions;
+    chartjsTooltipPronunciationPlugin?: TChartjsTooltipPronunciationPluginOptions;
   }
 }

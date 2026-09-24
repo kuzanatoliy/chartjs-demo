@@ -31,6 +31,7 @@ export const ChartSelectStrategy = () => {
       <label htmlFor={selectId}>Navigation strategy:</label>{' '}
       <select
         id={selectId}
+        autoFocus={false}
         onChange={changeHandler}
         className={styles['chartselectstrategy-selector']}
         value={strategy}

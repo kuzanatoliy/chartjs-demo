@@ -4,6 +4,7 @@ import { useMemo } from 'react';
 
 import { useChartContext } from '../ChartProvider';
 import { Chart } from 'react-chartjs-2';
+import { tooltipPronunciationFormatter } from './helpers';
 
 export type TChartWrapperProps<
   TOptions extends ChartOptions,
@@ -53,6 +54,9 @@ export const ChartWrapper = <
           outlineWeight: '2px',
           strategy: legendStrategy,
           direction,
+        },
+        chartjsTooltipPronunciationPlugin: {
+          pronunciationFormatter: tooltipPronunciationFormatter,
         },
       },
       scales: {

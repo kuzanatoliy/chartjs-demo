@@ -8,6 +8,7 @@ on:
         options:
           - chartjs-keyboard-plugin
           - chartjs-legend-keyboard-plugin
+          - chartjs-tooltip-pronunciation-plugin
 permissions:
   contents: write
   pull-requests: write

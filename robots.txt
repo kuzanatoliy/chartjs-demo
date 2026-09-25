@@ -1,0 +1,4 @@
+User-agent: *
+Allow: *
+Host: https://kuzanatoliy.github.io/chartjs-demo/
+Sitemap: https://kuzanatoliy.github.io/chartjs-demo/sitemap.xml

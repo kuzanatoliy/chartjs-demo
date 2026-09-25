@@ -1,7 +1,7 @@
 import { ChartType } from 'chart.js';
 import { type TChartjsKeyboardPluginOptions } from '@kuzanatoliorg/chartjs-keyboard-plugin';
 import { type TChartjsLegendKeyboardPluginOptions } from './src/plugins/chartjs-legend-keyboard-plugin';
-import { type TChartjsTooltipPronunciationPluginOptions } from './src/plugins/chartjs-tooltip-pronunciation';
+import { type TChartjsTooltipPronunciationPluginOptions } from '@kuzanatoliorg/chartjs-tooltip-pronunciation-plugin';
 
 // Define the shape of your plugin's configuration options
 export interface MyCustomPluginOptions {
